@@ -1,0 +1,33 @@
+.brand_logo{
+    height: 45px
+}
+#search{
+  border-radius: 5%;
+}
+/* Sidebar nav links */
+ .nav-link {
+  color: #08cdbd !important;
+}
+
+ .nav-link:hover,
+ .nav-link:focus {
+  color: #08cdbd !important;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+ .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #08cdbd !important;
+  font-weight: bold;
+}
+
+/* Submenu links */
+ .nav-link.text-white-50 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+ .nav-link.text-white-50:hover {
+  color: #ffffff !important;
+}
+

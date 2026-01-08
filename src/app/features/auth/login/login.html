@@ -1,0 +1,79 @@
+<div class="bg-image pt-2 pb-2">
+  <div class="login-card animate__animated animate__fadeIn shadow-lg">
+    <div class="text-center">
+      <!-- <i class="bi bi-shield-lock-fill text-primary" style="font-size: 4rem"></i>-->
+      <img src="./brand_logo.png" alt="" class="brand_logo">
+      <h2 class="fw-bold mt-2 text-primary">Login Admin Portal</h2> 
+    </div>
+
+    <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="mb-1">
+            <label for="emailAddress" class="form-label"
+              >Email ID <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input
+                type="email"
+                class="form-control"
+                id="emailAddress"
+                formControlName="email"
+                required
+                [ngClass]="{ 'is-invalid': submitted && f.email.invalid }"
+              />
+              @if ((f.email.touched || submitted) && f.email.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.email.errors['required']) { Email is required } @else if
+                (f.email.errors['email']) { Invalid email format }
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="mb-1">
+            <label for="password" class="form-label"
+              >Password <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                required
+                [ngClass]="{ 'is-invalid': submitted && f.password.invalid }"
+              />
+              @if ((f['password'].touched || submitted) && f['password'].errors) {
+              <div class="invalid-feedback d-block">
+                @if (f['password'].errors['required']) { Password is required } @else if
+                (f['password'].errors['minlength']) { Password must be at least 4 characters }
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between mb-2 mt-1">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="remember" />
+          <label class="form-check-label small text-primary" for="remember">Remember me</label>
+        </div>
+        <a class="small text-decoration-none text-primary" routerLink="/forgot-password"
+          >Forgot Password?</a
+        >
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="loginForm.invalid">
+        Sign In
+      </button>
+
+      <div class="text-center mb-3">
+        <span class="small text-muted"
+          >Don't have an account?
+          <a href="#" class="text-decoration-none text-primary" routerLink="/register">Register</a></span
+        >
+      </div>
+    </form>
+  </div>
+</div>

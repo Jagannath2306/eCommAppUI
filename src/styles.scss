@@ -1,0 +1,199 @@
+@use 'bootstrap/scss/bootstrap' with (
+  /* ===============================
+     CORE BRAND COLORS
+  =============================== */
+    $primary: #08cdbd,
+  $secondary: #0a4f4a,
+  $success: #2bb673,
+  $danger: #f36716,
+  $warning: #f4b740,
+  $info: #3dd5f3,
+  $light: #f4fefe,
+  $dark: #073b3a,
+
+  /* ===============================
+     BODY & TYPOGRAPHY
+  =============================== */
+    $body-bg: #ffffff,
+  $body-color: #073b3a,
+  $text-muted: #6c9f9b,
+  $link-color: #08cdbd,
+  $link-hover-color: #069f93,
+
+  /* ===============================
+     BORDERS & SURFACES
+  =============================== */
+    $border-color: #cfeeed,
+  $border-color-translucent: rgba(8, 205, 189, 0.25),
+  /* ===============================
+     BUTTONS
+  =============================== */ $btn-color:
+    #ffffff,
+  $btn-link-color: #08cdbd,
+  $btn-link-hover-color: #069f93,
+
+  /* ===============================
+     NAVBAR
+  =============================== */
+    $navbar-light-color: #fff,
+  $navbar-light-hover-color: #08cdbd,
+  $navbar-light-active-color: #069f93,
+
+  $navbar-dark-color: rgba(255, 255, 255, 0.75),
+  $navbar-dark-hover-color: #08cdbd,
+  $navbar-dark-active-color: #ffffff,
+
+  /* ===============================
+     DROPDOWNS
+  =============================== */ $dropdown-bg:
+    #ffffff,
+  $dropdown-border-color: #08cdbd,
+  $dropdown-link-color: #08cdbd,
+  $dropdown-link-hover-color: #ffffff,
+  $dropdown-link-hover-bg: #08cdbd,
+  $dropdown-link-active-color: #ffffff,
+  $dropdown-link-active-bg: #08cdbd,
+  $dropdown-divider-bg: rgba(8, 205, 189, 0.2),
+  $dropdown-header-color: #0a4f4a,
+
+  /* ===============================
+     CARDS
+  =============================== */ $card-bg: #ffffff,
+  $card-border-color: #cfeeed,
+  $card-cap-bg: #e6fbf9,
+  $card-color: #073b3a,
+
+  /* ===============================
+     TABLES
+  =============================== */ $table-bg:
+    transparent,
+  $table-color: #073b3a,
+  $table-border-color: #cfeeed,
+  $table-striped-bg: #e6fbf9,
+  $table-striped-color: #073b3a,
+  $table-hover-bg: #d2f4f1,
+  $table-hover-color: #073b3a,
+
+  /* ===============================
+     ALERTS
+  =============================== */ $alert-bg-scale:
+    -80%,
+  $alert-border-scale: -60%,
+  $alert-color-scale: 40%,
+
+  /* ===============================
+     FORMS & INPUTS
+  =============================== */
+    $input-bg: #ffffff,
+  $input-border-color: #cfeeed,
+  $input-focus-border-color: #08cdbd,
+  $input-focus-box-shadow: 0 0 0 0.2rem rgba(8, 205, 189, 0.25),
+  $form-check-input-checked-bg-color: #08cdbd,
+
+  $headings-font-family: 'Inter',
+  $headings-font-weight: 600
+);
+
+/* Fonts FIRST */
+@import '@fontsource/inter/300.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+
+//######################## Custom css Start ###########################
+
+/* Sidebar nav-pills colors */
+.bg-primary {
+  --bs-nav-link-color: #ffffff;
+  --bs-nav-link-hover-color: #ffffff;
+
+  --bs-nav-pills-link-active-color: #ffffff;
+  --bs-nav-pills-link-active-bg: rgba(255, 255, 255, 0.25);
+}
+.bg-primary .nav-link {
+  opacity: 0.9;
+}
+
+.bg-primary .nav-link:hover {
+  opacity: 1;
+}
+
+/* Targeting the standard Bootstrap class directly */
+.form-control {
+  border: none !important; /* Removes all default borders */
+  border-bottom: 1px solid #308c84 !important; /* Adds back only the bottom */
+  border-radius: 0 !important; /* Removes rounded corners */
+  background-color: transparent !important;
+  padding-left: 0;
+  padding-right: 0;
+  transition: border-bottom 0.4s ease-in-out, border-width 0.4s ease-in-out !important;
+}
+
+/* Style for when the user clicks inside the input */
+.form-control:focus {
+  box-shadow: none !important;
+  border-bottom: 3px solid #08cdbd !important;
+  outline: none;
+}
+
+/* Adjusting the File input button to look clean with the underline */
+.form-control::file-selector-button {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  color: #08cdbd;
+  padding: 0;
+  margin-right: 10px;
+}
+
+.form-label {
+  margin: 0px !important;
+}
+
+.row {
+  margin: 0 !important;
+}
+
+/* Force white text on Primary Buttons in all states */
+.btn-primary {
+  --bs-btn-color: #fff !important;
+  --bs-btn-hover-color: #fff !important;
+  --bs-btn-active-color: #fff !important;
+}
+
+/* Specifically for the 'active' state (the moment of clicking) */
+.btn-primary:active,
+.btn-primary.active,
+.show > .btn-primary.dropdown-toggle {
+  color: #ffffff !important;
+  background-color: #069f93 !important; /* Slightly darker shade of your primary */
+  border-color: #069f93 !important;
+}
+
+/* Sidebar Background */
+.bg-primary {
+  background-color: #08cdbd !important;
+}
+
+// ******************* SweetAlert2 Custom CSS Start ***************
+
+.swal-message {
+  font-size: 1rem;
+}
+
+.error-message {
+  color: #dc3545;   /* red */
+}
+
+.success-message {
+  color: #198754;   /* green */
+}
+
+.warning-message {
+  color: #ffc107;   /* yellow */
+}
+
+// ******************* SweetAlert2 Custom CSS Ends ****************
+
+// ####################### Custom css Ends ###########################

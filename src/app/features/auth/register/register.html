@@ -1,0 +1,77 @@
+<div class="bg-image pb-1 pt-1">
+  <div class="login-card animate__animated animate__fadeIn shadow-lg">
+     <div class="text-center">
+      <!-- <i class="bi bi-shield-lock-fill text-primary" style="font-size: 4rem"></i>-->
+      <img src="./brand_logo.png" alt="" class="brand_logo">
+      <h2 class="fw-bold mt-2 text-primary">Register Admin Portal</h2> 
+    </div>
+
+    <form autocomplete="off">
+      <div class="row">
+        <div class="col-12 col-lg-6 col-md-6">
+          <div class="mb-2">
+            <label for="firstName" class="form-label text-primary">First Name <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                id="firstName"
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6 col-md-6">
+          <div class="mb-2">
+            <label for="lastName" class="form-label text-primary">Last Name <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="lastName" required />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-12 col-md-12">
+          <div class="mb-2">
+            <label for="emailAddress" class="form-label text-primary">Email Address <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input
+                type="email"
+                class="form-control"
+                id="emailAddress"
+                required
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-6 col-md-6">
+          <div class="mb-2">
+            <label for="password" class="form-label text-primary">Password <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="password" />
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6 col-md-6">
+          <div class="mb-2">
+            <label for="confirmPassword" class="form-label text-primary">Confirm Password <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="confirmPassword" required />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 mb-2">Sign In</button>
+
+      <div class="text-center">
+        <span class="small text-muted">
+          Already have an account?
+          <a href="login.html" class="text-decoration-none text-primary" routerLink="/login">Login</a>
+        </span>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 205, 189, 0.12);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Spinner */
+.ball-spin-clockwise {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.ball-spin-clockwise span {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #08cdbd;
+  border-radius: 50%;
+  animation: ball-spin 1s infinite linear;
+}
+
+/* Position balls */
+.ball-spin-clockwise span:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); animation-delay: -0.875s; }
+.ball-spin-clockwise span:nth-child(2) { top: 12%; right: 12%; animation-delay: -0.75s; }
+.ball-spin-clockwise span:nth-child(3) { top: 50%; right: 0; transform: translateY(-50%); animation-delay: -0.625s; }
+.ball-spin-clockwise span:nth-child(4) { bottom: 12%; right: 12%; animation-delay: -0.5s; }
+.ball-spin-clockwise span:nth-child(5) { bottom: 0; left: 50%; transform: translateX(-50%); animation-delay: -0.375s; }
+.ball-spin-clockwise span:nth-child(6) { bottom: 12%; left: 12%; animation-delay: -0.25s; }
+.ball-spin-clockwise span:nth-child(7) { top: 50%; left: 0; transform: translateY(-50%); animation-delay: -0.125s; }
+.ball-spin-clockwise span:nth-child(8) { top: 12%; left: 12%; animation-delay: 0s; }
+
+/* Animation */
+@keyframes ball-spin {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.3);
+  }
+}
