@@ -196,4 +196,11 @@
 
 // ******************* SweetAlert2 Custom CSS Ends ****************
 
+
+.form-control.is-invalid {        /* normal border */
+  border-bottom-color: #f36716 !important; /* red bottom */
+  box-shadow: none;
+}
+
+
 // ####################### Custom css Ends ###########################

@@ -1,31 +1,62 @@
 <div class="bg-image pb-1 pt-1">
   <div class="login-card animate__animated animate__fadeIn shadow-lg">
-     <div class="text-center">
+    <div class="text-center">
       <!-- <i class="bi bi-shield-lock-fill text-primary" style="font-size: 4rem"></i>-->
-      <img src="./brand_logo.png" alt="" class="brand_logo">
-      <h2 class="fw-bold mt-2 text-primary">Register Admin Portal</h2> 
+      <img src="./brand_logo.png" alt="" class="brand_logo" />
+      <h2 class="fw-bold mt-2 text-primary">Register Admin Portal</h2>
     </div>
 
-    <form autocomplete="off">
+    <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-12 col-lg-6 col-md-6">
           <div class="mb-2">
-            <label for="firstName" class="form-label text-primary">First Name <span class="text-danger">*</span></label>
+            <label for="firstName" class="form-label text-primary"
+              >First Name <span class="text-danger">*</span></label
+            >
             <div class="input-group">
               <input
                 type="text"
                 class="form-control"
                 id="firstName"
                 required
+                formControlName="firstName"
+                [ngClass]="{
+                  'is-invalid': (f.firstName.touched || submitted) && f.firstName.invalid
+                }"
               />
+              @if ((f.firstName.touched || submitted) && f.firstName.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.firstName.errors['required']) { First Name is required } @else if
+                (f.firstName.errors['minlength']) { First Name must be at least 2 characters } @else if
+                if if (f.firstName.errors['maxlength']) { First Name can't exceed 20 characters }
+              </div>
+              }
             </div>
           </div>
         </div>
         <div class="col-12 col-lg-6 col-md-6">
           <div class="mb-2">
-            <label for="lastName" class="form-label text-primary">Last Name <span class="text-danger">*</span></label>
+            <label for="lastName" class="form-label text-primary"
+              >Last Name <span class="text-danger">*</span></label
+            >
             <div class="input-group">
-              <input type="text" class="form-control" id="lastName" required />
+              <input
+                type="text"
+                class="form-control"
+                id="lastName"
+                required
+                formControlName="lastName"
+                [ngClass]="{
+                  'is-invalid': (f.lastName.touched || submitted) && f.lastName.invalid
+                }"
+              />
+              @if ((f.lastName.touched || submitted) && f.lastName.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.lastName.errors['required']) { Last Name is required } @else if
+                (f.lastName.errors['minlength']) { Last Name must be at least 2 characters } @else if
+                if if (f.lastName.errors['maxlength']) { Last Name can't exceed 20 characters }
+              </div>
+              }
             </div>
           </div>
         </div>
@@ -33,14 +64,24 @@
       <div class="row">
         <div class="col-12 col-lg-12 col-md-12">
           <div class="mb-2">
-            <label for="emailAddress" class="form-label text-primary">Email Address <span class="text-danger">*</span></label>
+            <label for="emailAddress" class="form-label text-primary"
+              >Email ID <span class="text-danger">*</span></label
+            >
             <div class="input-group">
               <input
                 type="email"
                 class="form-control"
                 id="emailAddress"
                 required
+                formControlName="email"
+                [ngClass]="{ 'is-invalid': (f.email.touched || submitted) && f.email.invalid }"
               />
+              @if ((f.email.touched || submitted) && f.email.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.email.errors['required']) { Email Name is required } @else if
+                (f.email.errors['email']) { Invalid email format }
+              </div>
+              }
             </div>
           </div>
         </div>
@@ -48,17 +89,54 @@
       <div class="row">
         <div class="col-12 col-lg-6 col-md-6">
           <div class="mb-2">
-            <label for="password" class="form-label text-primary">Password <span class="text-danger">*</span></label>
+            <label for="password" class="form-label text-primary"
+              >Password <span class="text-danger">*</span></label
+            >
             <div class="input-group">
-              <input type="password" class="form-control" id="password" />
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                [ngClass]="{
+                  'is-invalid': (f.password.touched || submitted) && f.password.invalid
+                }"
+              />
+              @if ((f.password.touched || submitted) && f.password.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.password.errors['required']) { Password is required } @else if
+                (f.password.errors['pattern']) { Password must include 1 uppercase, 1 number, 1
+                special char and minium 8 chars }
+              </div>
+              }
             </div>
           </div>
         </div>
         <div class="col-12 col-lg-6 col-md-6">
           <div class="mb-2">
-            <label for="confirmPassword" class="form-label text-primary">Confirm Password <span class="text-danger">*</span></label>
+            <label for="confirmPassword" class="form-label text-primary"
+              >Confirm Password <span class="text-danger">*</span></label
+            >
             <div class="input-group">
-              <input type="password" class="form-control" id="confirmPassword" required />
+              <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                required
+                formControlName="confirmPassword"
+                [ngClass]="{
+                  'is-invalid':
+                    (f.confirmPassword.touched || submitted) && f.confirmPassword.invalid
+                }"
+              />
+              @if ((f.confirmPassword.touched || submitted) && f.confirmPassword.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.confirmPassword.errors['required']) { Confirm Password is required } @else if
+                (f.confirmPassword.errors['pattern']) { Password must include 1 uppercase, 1 number,
+                1 special char and minium 8 chars } @else if (f.confirmPassword.errors['mustMatch'])
+                { Passwords do not match }
+              </div>
+              }
             </div>
           </div>
         </div>
@@ -69,7 +147,9 @@
       <div class="text-center">
         <span class="small text-muted">
           Already have an account?
-          <a href="login.html" class="text-decoration-none text-primary" routerLink="/login">Login</a>
+          <a href="login.html" class="text-decoration-none text-primary" routerLink="/login"
+            >Login</a
+          >
         </span>
       </div>
     </form>

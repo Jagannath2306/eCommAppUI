@@ -20,10 +20,6 @@ import { LoaderService } from './core/services/loader/loader';
     Header,
     Footer,
     Sidebar,
-    Login,
-    Register,
-    ForgotPassword,
-    ResetPassword,
     NgxSpinnerModule,
     Loader
   ],

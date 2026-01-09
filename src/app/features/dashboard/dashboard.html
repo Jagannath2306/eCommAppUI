@@ -1,22 +1,22 @@
-<div class="container-fluid p-0 overflow-hidden">
-  <div class="row g-0">
+<div class="dashboard-wrapper">
+  
+  <aside class="sidebar-desktop d-none d-md-block shadow-sm">
+    <app-sidebar></app-sidebar>
+  </aside>
+
+  <div class="main-container">
     
-    <aside class="col-md-3 col-lg-2 d-none d-md-block bg-primary vh-100 sticky-top shadow">
-      <app-sidebar></app-sidebar>
-    </aside>
-
-    <div class="col-12 col-md-9 col-lg-10 d-flex flex-column vh-100">
-      
-      <app-header></app-header>
-      
-      <main class="flex-grow-1 p-3 p-md-4 overflow-auto bg-light">
+    <app-header></app-header>
+    
+    <main class="content-body">
+      <div class="container-fluid py-4">
         <router-outlet></router-outlet>
-      </main>
+      </div>
+    </main>
 
-      <app-footer></app-footer>
-    </div>
-
+    <app-footer></app-footer>
   </div>
+
 </div>
 
 <div class="offcanvas offcanvas-start bg-primary d-md-none" tabindex="-1" id="mobileSidebar">

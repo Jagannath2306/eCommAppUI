@@ -1,79 +1,52 @@
-<div class="d-flex flex-column flex-shrink-0 text-white h-100">
+@if (menu$ | async; as menu) {
+<div class="d-flex flex-column flex-shrink-0 text-white h-100 bg-primary py-3">
+  <div class="px-3 mb-2 d-flex justify-content-center">
+    <h4 class="fw-bold mb-0 mb-3 pt-2 text-uppercase">Admin Portal</h4>
+    <hr class="text-white hr" />
+  </div>
+
   <ul class="nav nav-pills flex-column mb-auto">
-    <li class="nav-item">
-      <a href="javascript:void(0)" class="active nav-link text-white d-flex justify-content-between">
-        <h4 class="mb-0 mx-2 my-1 pt-2">Admin Portal</h4>
-      </a>
-      <hr/>
-    </li>
-
-    <li class="nav-item">
+    @for (module of menu; track $index; let i = $index) {
+    <li class="nav-item mb-1">
       <a
         href="javascript:void(0)"
-        class="nav-link text-white d-flex justify-content-between"
-        [class.active]="!isDashboardCollapsed"
-        (click)="isDashboardCollapsed = !isDashboardCollapsed"
+        class="nav-link text-white d-flex justify-content-between align-items-center mx-2 py-2"
+        [class.active-parent]="openModuleId === (module._id || i.toString())"
+        (click)="toggleModule(module._id || i.toString())"
       >
-        <span><i class="bi bi-speedometer2 me-2"></i> User Management</span>
-        <i class="bi" [ngClass]="isDashboardCollapsed ? 'bi-chevron-down' : 'bi-chevron-up'"></i>
+        <span>
+          <i class="me-2" [class]="module.icon || 'bi-grid-fill'"></i>
+          {{ module.name }}
+        </span>
+        <i
+          class="bi"
+          [class.bi-chevron-down]="openModuleId !== (module._id || i.toString())"
+          [class.bi-chevron-up]="openModuleId === (module._id || i.toString())"
+        >
+        </i>
       </a>
 
-      <div [ngbCollapse]="isDashboardCollapsed">
-        <ul class="nav flex-column ms-3 mt-1 small">
+      <div [ngbCollapse]="openModuleId !== (module._id || i.toString())">
+        <ul class="nav flex-column ms-4 mt-1 small border-start border-white-50">
+          @for (sub of module.subModules; track $index) { @if (sub.pages?.length) {
+          <li class="nav-item fw-bold px-3 mt-2 text-uppercase" style="font-size: 0.7rem">
+            <i class="bi bi-dash me-1"></i> {{ sub.name }}
+          </li>
+          @for (page of sub.pages; track $index) {
           <li class="nav-item">
             <a
-              class="nav-link text-white d-flex align-items-center"
-              routerLink="/admin"
+              class="nav-link text-white-50 py-1 ps-3 text-capitalize"
+              [routerLink]="page.url"
               routerLinkActive="active-sub"
             >
-              <i class="bi bi-dot"></i> Admin Dashboard
+              <i class="bi bi-dot me-1"></i> {{ page.name }}
             </a>
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link text-white d-flex align-items-center"
-              routerLink="/user"
-              routerLinkActive="active-sub"
-            >
-              <i class="bi bi-dot"></i> User Dashboard
-            </a>
-          </li>
+          } } }
         </ul>
       </div>
     </li>
-
-    <li class="mt-2">
-      <a
-        href="javascript:void(0)"
-        class="nav-link text-white d-flex justify-content-between"
-        (click)="isOrdersCollapsed = !isOrdersCollapsed"
-      >
-        <span><i class="bi bi-table me-2"></i> Orders</span>
-        <i class="bi" [ngClass]="isOrdersCollapsed ? 'bi-chevron-down' : 'bi-chevron-up'"></i>
-      </a>
-
-      <div [ngbCollapse]="isOrdersCollapsed">
-        <ul class="nav flex-column ms-3 mt-1 small">
-          <li class="nav-item">
-            <a
-              class="nav-link text-white d-flex align-items-center"
-              routerLink="/orders/pending"
-              routerLinkActive="active-sub"
-            >
-              <i class="bi bi-dot"></i> Pending
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link text-white d-flex align-items-center"
-              routerLink="/orders/completed"
-              routerLinkActive="active-sub"
-            >
-              <i class="bi bi-dot"></i> Completed
-            </a>
-          </li>
-        </ul>
-      </div>
-    </li>
+    }
   </ul>
 </div>
+}
