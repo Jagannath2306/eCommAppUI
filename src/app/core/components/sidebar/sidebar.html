@@ -1,0 +1,68 @@
+@if (menus === null) {
+<div class="p-4 text-center text-white-50">
+  <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+  <small>Loading menus...</small>
+</div>
+} @else if (menus.length > 0) {
+<div class="d-flex flex-column flex-shrink-0 text-white h-100 bg-primary py-3">
+  <div class="px-3 mb-2 d-flex justify-content-center flex-column align-items-center">
+    <h4 class="fw-bold mb-0 mb-3 pt-2 text-uppercase">Admin Portal</h4>
+    <hr class="text-white w-100 opacity-25" />
+  </div>
+
+  <ul class="nav nav-pills flex-column mb-auto">
+    @for (module of menus; track module._id || $index; let i = $index) { @let moduleId = (module._id
+    || i).toString();
+
+    <li class="nav-item mb-1">
+      <a
+        href="javascript:void(0)"
+        class="nav-link text-white d-flex justify-content-between align-items-center mx-2 py-2 text-capitalize"
+        [class.active-parent]="openModuleId === moduleId"
+        (click)="toggleModule(moduleId)"
+      >
+        <span>
+          <i class="me-2 text-capitalize" [class]="module.icon || 'bi-grid-fill'"></i>
+          {{ module.name }}
+        </span>
+        <i
+          class="bi"
+          [class.bi-chevron-down]="openModuleId !== moduleId"
+          [class.bi-chevron-up]="openModuleId === moduleId"
+        >
+        </i>
+      </a>
+
+      <div [ngbCollapse]="openModuleId !== moduleId">
+        <ul class="nav flex-column ms-4 mt-1 small border-start border-white-50">
+          @for (sub of module.subModules; track sub.name || $index) { @if (sub.pages?.length) {
+          <li
+            class="nav-item px-3 my-2 text-capitalize text-white pointer"
+            style="font-size: 0.8rem"
+            [routerLink]="['/' + sub.url]"
+            routerLinkActive="active-sub text-white fw-bold py-1"
+          > 
+           <i class="me-2" [class]="sub.icon || 'bi-grid-fill'"></i>{{ sub.name }}
+          </li>
+
+          <!-- @for (page of sub.pages; track page.url || $index) {
+                  <li class="nav-item">
+                    <a class="nav-link text-white-50 py-1 ps-3"
+                       [routerLink]="['/' + page.url]"
+                       routerLinkActive="active-sub text-white fw-bold">
+                      <i class="bi bi-dot me-1"></i> {{ page.name }}
+                    </a>
+                  </li>
+                } -->
+          } }
+        </ul>
+      </div>
+    </li>
+    }
+  </ul>
+</div>
+} @else {
+<div class="p-4 text-center text-white-50">
+  <small>No menus available for this account.</small>
+</div>
+}

@@ -1,0 +1,87 @@
+<div class="table-responsive bg-white rounded shadow-sm">
+  <table class="table table-hover align-middle mb-0">
+    <thead class="table-light">
+      <tr>
+        @for (col of columns(); track col.key) {
+        <th
+          (click)="sort(col)"
+          [class.cursor-pointer]="col.sortable"
+          class="small text-white"
+        >
+          {{ col.label }}
+          @if (sortKey() === col.key) {
+          <i
+            class="bi ms-1 text-white"
+            [class.bi-sort-up]="sortDirection() === 'asc'"
+            [class.bi-sort-down]="sortDirection() === 'desc'"
+          ></i>
+          }
+        </th>
+        } @if (showActions()) {
+        <th class="px-2 text-white">Actions</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of paginatedData(); track row['_id'] || $index) {
+      <tr>
+        @for (col of columns(); track col.key) {
+        <td class="small">
+          @if (col.key === 'isActive') {
+          <span class="badge" [ngClass]="row[col.key] ? 'bg-success' : 'bg-danger'">
+            {{ row[col.key] ? 'Active' : 'Inactive' }}
+          </span>
+          } @else if (col.key === 'createdOn') {
+          {{ row[col.key] | date : 'mediumDate' }}
+          } @else {
+          {{ row[col.key] }}
+          }
+        </td>
+        } @if (showActions()) {
+        <td class="px-2">
+          <button class="btn btn-sm btn-outline-primary me-2" (click)="edit.emit(row)">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-sm btn-outline-danger" (click)="delete.emit(row)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+        }
+      </tr>
+      } @empty {
+      <tr>
+        <td [attr.colspan]="columns().length + 1" class="text-center py-5 text-muted">
+          No data available
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between align-items-center p-3 border-top">
+  <small class="fw-bold small text-primary">
+    Showing {{ showingCount() }} of {{ data().length }} entries
+  </small>
+
+  <nav>
+    <ul class="pagination pagination-sm mb-0">
+      <li class="page-item" [class.disabled]="currentPage() === 1">
+        <button class="page-link" (click)="prevPage()" aria-label="Previous">
+          <i class="bi bi-arrow-left-circle"></i>
+        </button>
+      </li>
+
+      @for (p of pageNumbers(); track p) {
+        <li class="page-item" [class.active]="currentPage() === p">
+          <button class="page-link" (click)="changePage(p)">{{ p }}</button>
+        </li>
+      }
+
+      <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+        <button class="page-link" (click)="nextPage()" aria-label="Next">
+          <i class="bi bi-arrow-right-circle"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>

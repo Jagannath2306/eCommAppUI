@@ -16,8 +16,11 @@ import { ToastService } from '../../../shared/services/toast.service';
 export class AuthService {
   private http = inject(HttpClient);
   private toast = inject(ToastService);
-  public isLoggedIn = signal(false);
   private baseUrl = environment.apiBaseUrl;
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token'); // or access_token
+  }
 
   register(
     firstName: string,
@@ -26,16 +29,22 @@ export class AuthService {
     password: string,
     confirmPassword: string
   ) {
-    return this.http.post<RegisterResponse>(`${this.baseUrl}/User/Register`, {firstName,lastName, email, password,confirmPassword }).pipe(
-      tap((response) => {
-        if (response.success && response.data) {
-
-        } else {
-          console.error(response.message);
-
-        }
+    return this.http
+      .post<RegisterResponse>(`${this.baseUrl}/User/Register`, {
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
       })
-    );
+      .pipe(
+        tap((response) => {
+          if (response.success && response.data) {
+          } else {
+            console.error(response.message);
+          }
+        })
+      );
   }
 
   login(email: string, password: string) {
@@ -43,11 +52,9 @@ export class AuthService {
       tap((response) => {
         if (response.success && response.data) {
           localStorage.setItem('token', response.data);
-          this.isLoggedIn.set(true);
         } else {
           // handle error message
           console.error(response.message);
-          this.isLoggedIn.set(false);
         }
       })
     );
@@ -55,7 +62,6 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
-    this.isLoggedIn.set(false);
   }
 
   forgotPassword(email: string) {

@@ -1,22 +1,32 @@
 import { Routes } from '@angular/router';
-import { ForgotPassword } from './features/auth/forgot-password/forgot-password';
-import { Login } from './features/auth/login/login';
-import { Register } from './features/auth/register/register';
-import { ResetPassword } from './features/auth/reset-password/reset-password';
-import { Dashboard } from './features/dashboard/dashboard';
 import { authGuard } from './core/guards/auth.guard';
 import { resetPasswordGuard } from './core/guards/reset-password.guard';
+import { Login } from './features/components/auth/login/login';
+import { Register } from './features/components/auth/register/register';
+import { ForgotPassword } from './features/components/auth/forgot-password/forgot-password';
+import { ResetPassword } from './features/components/auth/reset-password/reset-password';
+import { Dashboard } from './features/components/dashboard/dashboard';
 
 export const routes: Routes = [
-  // Guest Routes (Show in the @else block)
+  // Guest
   { path: 'login', component: Login },
   { path: 'register', component: Register },
   { path: 'forgot-password', component: ForgotPassword },
-  { path: 'reset-password', component: ResetPassword , canActivate: [resetPasswordGuard]},
+  {
+    path: 'reset-password',
+    component: ResetPassword,
+    canActivate: [resetPasswordGuard],
+  },
 
-  // Protected Routes (Show in the @if block)
-    { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
+  // Protected + Lazy
+  {
+    path: 'dashboard',
+    component: Dashboard,
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./features/components/dashboard/dashboard.routes')
+        .then(m => m.DASHBOARD_ROUTES),
+  },
 
-  // Redirect empty path to login
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];

@@ -1,0 +1,44 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  cursor: pointer;
+  background: #08cdbd;
+  color: #ffffff;
+}
+
+th.sortable:hover {
+  background: #eaeaea;
+}
+
+td, th {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.pagination {
+  margin-top: 10px;
+}
+
+.pagination button {
+  margin-right: 4px;
+}
+
+.pagination .active {
+  font-weight: bold;
+}
+
+.page-link{
+    background-color: #08cdbd !important;
+    color: #ffffff;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;  
+  background-color: #abd5d1;
+  border-color: #abd5d1;
+  cursor: not-allowed;
+}
