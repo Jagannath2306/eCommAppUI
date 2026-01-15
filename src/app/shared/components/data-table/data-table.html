@@ -18,7 +18,7 @@
           }
         </th>
         } @if (showActions()) {
-        <th class="px-2 text-white">Actions</th>
+        <th class="px-2 text-white small">Actions</th>
         }
       </tr>
     </thead>
@@ -38,12 +38,15 @@
           }
         </td>
         } @if (showActions()) {
-        <td class="px-2">
+        <td class="px-2 small">
           <button class="btn btn-sm btn-outline-primary me-2" (click)="edit.emit(row)">
             <i class="bi bi-pencil"></i>
           </button>
-          <button class="btn btn-sm btn-outline-danger" (click)="delete.emit(row)">
+          <button class="btn btn-sm btn-outline-danger me-2" (click)="delete.emit(row)">
             <i class="bi bi-trash"></i>
+          </button>
+          <button class="btn btn-sm btn-outline-info" (click)="view.emit(row)">
+            <i class="bi bi-eye"></i>
           </button>
         </td>
         }

@@ -20,6 +20,7 @@ export class DataTable {
   /* Outputs */
   @Output() edit = new EventEmitter<Record<string, any>>();
   @Output() delete = new EventEmitter<Record<string, any>>();
+  @Output() view = new EventEmitter<Record<string, any>>();
 
   /* State */
   currentPage = signal(1);

@@ -9,7 +9,7 @@ import { passwordMatchValidator } from '../../../../shared/validators/password-m
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
@@ -47,27 +47,27 @@ export class Register {
   get f() {
     return this.registerForm.controls;
   }
-  onSubmit() {
-    this.submitted = true;
+  // onSubmit() {
+  //   this.submitted = true;
 
-    if (this.registerForm.invalid) return;
+  //   if (this.registerForm.invalid) return;
 
-    const { firstName, lastName, email, password, confirmPassword } = this.registerForm.value;
+  //   const { firstName, lastName, email, password, confirmPassword } = this.registerForm.value;
 
-    this.authService
-      .register(firstName!, lastName!, email!, password!, confirmPassword!)
-      .subscribe({
-        next: (res) => {
-          if (res.success) {
-            this.toast.success(res.message);
-            this.router.navigate(['/login']);
-          } else {
-            this.alert.error(res.message);
-          }
-        },
-        error: (err) => {
-          this.alert.error(err.error.message);
-        },
-      });
-  }
+  //   this.authService
+  //     .register(firstName!, lastName!, email!, password!, confirmPassword!)
+  //     .subscribe({
+  //       next: (res) => {
+  //         if (res.success) {
+  //           this.toast.success(res.message);
+  //           this.router.navigate(['/login']);
+  //         } else {
+  //           this.alert.error(res.message);
+  //         }
+  //       },
+  //       error: (err) => {
+  //         this.alert.error(err.error.message);
+  //       },
+  //     });
+  // }
 }

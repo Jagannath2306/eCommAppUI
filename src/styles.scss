@@ -94,6 +94,10 @@
   $headings-font-weight: 600
 );
 
+[class*='btn-outline-'] {
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: #fff;
+}
 /* Fonts FIRST */
 @import '@fontsource/inter/300.css';
 @import '@fontsource/inter/400.css';
@@ -132,6 +136,22 @@
 
 /* Style for when the user clicks inside the input */
 .form-control:focus {
+  box-shadow: none !important;
+  border-bottom: 3px solid #08cdbd !important;
+  outline: none;
+}
+.form-select {
+  border: none !important; /* Removes all default borders */
+  border-bottom: 1px solid #308c84 !important; /* Adds back only the bottom */
+  border-radius: 0 !important; /* Removes rounded corners */
+  background-color: transparent !important;
+  padding-left: 0;
+  padding-right: 0;
+  transition: border-bottom 0.4s ease-in-out, border-width 0.4s ease-in-out !important;
+}
+
+/* Style for when the user clicks inside the input */
+.form-select:focus {
   box-shadow: none !important;
   border-bottom: 3px solid #08cdbd !important;
   outline: none;
@@ -183,26 +203,26 @@
 }
 
 .error-message {
-  color: #dc3545;   /* red */
+  color: #dc3545; /* red */
 }
 
 .success-message {
-  color: #198754;   /* green */
+  color: #198754; /* green */
 }
 
 .warning-message {
-  color: #ffc107;   /* yellow */
+  color: #ffc107; /* yellow */
 }
 
 // ******************* SweetAlert2 Custom CSS Ends ****************
 
-
-.form-control.is-invalid {        /* normal border */
+.form-control.is-invalid {
+  /* normal border */
   border-bottom-color: #f36716 !important; /* red bottom */
   box-shadow: none;
 }
 
-a{
+a {
   cursor: pointer;
 }
 

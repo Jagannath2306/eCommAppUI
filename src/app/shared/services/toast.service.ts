@@ -9,7 +9,7 @@ export class ToastService {
     toast: true,
     position: 'top-end' as SweetAlertPosition,
     showConfirmButton: false,
-    timer: 5000,
+    timer: 4000,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer);

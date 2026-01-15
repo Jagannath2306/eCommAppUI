@@ -1,0 +1,70 @@
+<app-modal title="User Info" confirmText="Create User" mode="view">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="card border-0">
+          <div class="card-header bg-white border-bottom-0 px-4">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h3 class="fw-bold mb-0 text-capitalize">{{user()?.firstName}} {{user()?.lastName}}</h3>
+                <span
+                  class="badge rounded-pill bg-primery-subtle text-primary border border-primary-subtle mt-2 text-capitalize"
+                >
+                  {{user()?.userTypeId?.name}}
+                </span>
+              </div>
+              <span class="badge bg-success text-white px-3 py-2" [ngClass]="user()?.isActive ? 'bg-success' : 'bg-danger'">
+                <i class="bi bi-check-circle-fill me-1"></i> {{user()?.isActive ? 'Active' : 'Inactive'}}
+              </span>
+            </div>
+          </div>
+
+          <div class="card-body px-4">
+            <div class="row">
+              <div class="col-6">
+                <label class="text-muted small text-uppercase fw-bold">Email Address</label>
+                <p class="mb-0">j{{user()?.email}}</p>
+              </div>
+              <div class="col-6">
+                <label class="text-muted small text-uppercase fw-bold">System ID</label>
+                <p class="text-muted font-monospace small">{{user()?._id}}</p>
+              </div>
+
+              <div class="col-12m-0">
+                <hr class="text-muted opacity-25" />
+              </div>
+
+              <div class="col-sm-6">
+                <label class="text-muted small text-uppercase fw-bold">Created By</label>
+                <p class="mb-0 text-dark text-muted">{{user()?.createdBy?.firstName}} {{user()?.createdBy?.lastName}}</p>
+                <small class="text-muted">Email : {{user()?.createdBy?.email}}</small>
+                <small class="text-muted d-block text-capitalize my-1">{{user()?.createdOn}}</small>
+                <small class="text-muted d-block text-capitalize my-1">Creator ID : {{user()?.createdBy?._id}}</small>
+              </div>
+
+              <div class="col-sm-6">
+                <label class="text-muted small text-uppercase fw-bold">Last Updated</label>
+                <p class="mb-0 text-dark"><small class="text-muted text-capitalize">{{user()?.updatedOn}}</small></p>
+                
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="card-footer bg-light border-0 py-3 px-4 text-end">
+          <div class="d-flex gap-2 justify-content-end">
+            <button class="btn btn-outline-info">
+              <i class="bi bi-pencil me-1"></i> Edit User
+            </button>
+            <button class="btn btn-outline-danger">
+              <i class="bi bi-trash me-1"></i> Delete
+            </button>
+            <button class="btn btn-outline-primary px-4">
+              Close
+            </button>
+          </div>
+        </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</app-modal>

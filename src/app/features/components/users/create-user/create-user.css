@@ -1,0 +1,19 @@
+.custom-select {
+  padding: 10px;
+}
+option:hover {
+  border: 1px solid red !important;
+}
+.form-select option:hover {
+  background-color: #08cdbd !important;
+  color: #fff;
+}
+option {
+  background: #ffffff !important;
+  color: #08cdbd !important;
+}
+option:hover {
+  background: #08cdbd !important;
+  color: #ffffff !important;
+}
+

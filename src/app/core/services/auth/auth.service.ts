@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-import { signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import {
   LoginResponse,
@@ -27,7 +26,8 @@ export class AuthService {
     lastName: string,
     email: string,
     password: string,
-    confirmPassword: string
+    confirmPassword: string,
+    userTypeId:string
   ) {
     return this.http
       .post<RegisterResponse>(`${this.baseUrl}/User/Register`, {
@@ -36,6 +36,7 @@ export class AuthService {
         email,
         password,
         confirmPassword,
+        userTypeId
       })
       .pipe(
         tap((response) => {

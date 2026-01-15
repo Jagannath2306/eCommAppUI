@@ -1,0 +1,13 @@
+ /* Override hover color to white as requested */
+  .btn-outline-primary:hover, 
+  .btn-outline-danger:hover, 
+  .btn-outline-info:hover {
+    color: #fff !important;
+  }
+  
+  /* Styling tweaks for labels */
+  label {
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+  }

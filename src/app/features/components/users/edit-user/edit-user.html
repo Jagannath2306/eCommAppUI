@@ -1,0 +1,95 @@
+<app-modal
+  title="Edit User"
+  confirmText="Update User"
+  mode="edit"
+  [disableConfirm]="registerForm.invalid"
+  (confirm)="onSubmit()"
+>
+  <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="mb-4">
+          <label for="types" class="form-label text-primary"
+            >Select User Type <span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <select
+              class="form-select custom-select text-uppercase"
+              formControlName="userTypeId"
+              id="types"
+             [ngClass]="{
+                'is-invalid': (f.userTypeId.touched || submitted) && f.userTypeId.invalid
+              }"
+            >
+              <option value="" disabled selected>Select User Type</option>
+              @for (type of userTypes(); track type._id) {
+              <option [value]="type._id" class="text-uppercase">{{ type.name }}</option>
+              } @empty {
+              <option disabled>No Types found</option>
+              }
+            </select>
+             @if ((f.userTypeId.touched || submitted) && f.userTypeId.errors) {
+            <div class="invalid-feedback d-block">
+              @if (f.userTypeId.errors['required']) { First Name is required }
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="mb-2">
+          <label for="firstName" class="form-label text-primary"
+            >First Name <span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              required
+              formControlName="firstName"
+              [ngClass]="{
+                'is-invalid': (f.firstName.touched || submitted) && f.firstName.invalid
+              }"
+            />
+            @if ((f.firstName.touched || submitted) && f.firstName.errors) {
+            <div class="invalid-feedback d-block">
+              @if (f.firstName.errors['required']) { First Name is required } @else if
+              (f.firstName.errors['minlength']) { First Name must be at least 2 characters } @else if (f.firstName.errors['maxlength']) { First Name can't exceed 20 characters }
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="mb-2">
+          <label for="lastName" class="form-label text-primary"
+            >Last Name <span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              required
+              formControlName="lastName"
+              [ngClass]="{
+                'is-invalid': (f.lastName.touched || submitted) && f.lastName.invalid
+              }"
+            />
+            @if ((f.lastName.touched || submitted) && f.lastName.errors) {
+            <div class="invalid-feedback d-block">
+              @if (f.lastName.errors['required']) { Last Name is required } @else if
+              (f.lastName.errors['minlength']) { Last Name must be at least 2 characters } @else if
+              if if (f.lastName.errors['maxlength']) { Last Name can't exceed 20 characters }
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </form>
+</app-modal>

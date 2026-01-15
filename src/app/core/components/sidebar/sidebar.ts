@@ -25,13 +25,8 @@ export class Sidebar implements OnInit {
   }
 
   loadMenus() {
-    const email = localStorage.getItem('email');
-    if (!email) {
-      this.menus = []; // Stop loading state
-      return;
-    }
-
-    this.menuService.loadMenu(email).subscribe({
+    
+    this.menuService.loadMenu().subscribe({
       next: (res) => {
         if (res.success && res.data) {
           // Process data
