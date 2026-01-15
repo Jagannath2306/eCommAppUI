@@ -39,13 +39,19 @@
         </td>
         } @if (showActions()) {
         <td class="px-2 small">
-          <button class="btn btn-sm btn-outline-primary me-2" (click)="edit.emit(row)">
+          <button 
+          *hasPermission="['USER_LIST', 'edit']"
+          class="btn btn-sm btn-outline-primary me-2" (click)="edit.emit(row)">
             <i class="bi bi-pencil"></i>
           </button>
-          <button class="btn btn-sm btn-outline-danger me-2" (click)="delete.emit(row)">
+          <button 
+          *hasPermission="['USER_LIST', 'delete']"
+          class="btn btn-sm btn-outline-danger me-2" (click)="delete.emit(row)">
             <i class="bi bi-trash"></i>
           </button>
-          <button class="btn btn-sm btn-outline-info" (click)="view.emit(row)">
+          <button 
+          *hasPermission="['USER_LIST', 'view']"
+           class="btn btn-sm btn-outline-info" (click)="view.emit(row)">
             <i class="bi bi-eye"></i>
           </button>
         </td>

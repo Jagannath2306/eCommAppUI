@@ -4,6 +4,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MenuService } from '../../../core/services/menu/menu.service';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from '../../../shared/services/alert.service';
+import { PermissionService } from '../../services/permission/permission.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,6 +15,7 @@ import { AlertService } from '../../../shared/services/alert.service';
 })
 export class Sidebar implements OnInit {
   private menuService = inject(MenuService);
+  private permissionService = inject(PermissionService);
   private alert = inject(AlertService);
   private cdr = inject(ChangeDetectorRef); // Added for manual refresh
 
@@ -22,25 +24,25 @@ export class Sidebar implements OnInit {
 
   ngOnInit() {
     this.loadMenus();
+    this.getPermissions();
   }
 
   loadMenus() {
-    
     this.menuService.loadMenu().subscribe({
       next: (res) => {
         if (res.success && res.data) {
           // Process data
           const builtMenu = this.menuService.buildMenu(res.data);
-          
+
           // CRITICAL: Ensure we are assigning an array
           this.menus = Array.isArray(builtMenu) ? builtMenu : [];
 
           if (this.menus.length > 0 && !this.openModuleId) {
             this.openModuleId = (this.menus[0]._id || '0').toString();
           }
-          
+
           // Force UI Update
-          this.cdr.detectChanges(); 
+          this.cdr.detectChanges();
         } else {
           this.menus = [];
           this.alert.error(res.message || 'Failed to build menu');
@@ -50,7 +52,17 @@ export class Sidebar implements OnInit {
         this.menus = [];
         this.alert.error(err.error?.message || 'Menu load failed');
         this.cdr.detectChanges();
-      }
+      },
+    });
+  }
+  getPermissions() {
+    this.menuService.getPermissions().subscribe({
+      next: (res) => {
+        if (res.success && res.data) {
+          this.permissionService.setPermissions(res.data);
+        }
+      },
+      error: (err) => {},
     });
   }
 

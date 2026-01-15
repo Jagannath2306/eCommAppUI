@@ -1,17 +1,24 @@
 <div class="row">
-    <div class="col-12 d-flex justify-content-between p-2">
-        <h3 class="m-0">User Setup</h3>
-        <button class="btn btn-primary" (click)="openCreateUser()">Create User</button>
-    </div>
+  <div class="col-12 d-flex justify-content-between p-2">
+    <h3 class="m-0">User Setup</h3>
+    <button
+      *hasPermission="['USER_LIST', 'create']"
+      class="btn btn-primary"
+      (click)="openCreateUser()"
+    >
+      Create User
+    </button>
+  </div>
 </div>
 <div class="row">
-    <div class="col-12  p-2">
-       <app-data-table
+  <div class="col-12 p-2">
+    <app-data-table
       [columns]="columns"
       [data]="users()"
       (edit)="onEdit($event)"
       (delete)="onDelete($event)"
-      (view)="onView($event)">
+      (view)="onView($event)"
+    >
     </app-data-table>
-    </div>
+  </div>
 </div>

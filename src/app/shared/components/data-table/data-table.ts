@@ -1,11 +1,12 @@
 import { Component, computed, EventEmitter, input, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableColumn } from '../../models/table-column.model';
+import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
 
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,HasPermissionDirective],
   templateUrl: './data-table.html',
   styleUrl: './data-table.css',
 })

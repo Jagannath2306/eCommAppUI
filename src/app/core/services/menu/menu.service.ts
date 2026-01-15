@@ -11,7 +11,17 @@ export class MenuService {
   private http = inject(HttpClient);
 
   loadMenu() {
-    return this.http.get<MenuList>(`${this.baseUrl}/UserPageRights/GetMenusByUser`).pipe(
+    return this.http.get<MenuList>(`${this.baseUrl}/UserPageRights/GetMenus`).pipe(
+      tap((response) => {
+        if (response.success && response.data) {
+        } else {
+          console.error(response.message);
+        }
+      })
+    );
+  }
+  getPermissions() {
+    return this.http.get<MenuList>(`${this.baseUrl}/RolePermission/GetPermissions`).pipe(
       tap((response) => {
         if (response.success && response.data) {
         } else {

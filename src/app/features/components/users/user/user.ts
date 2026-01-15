@@ -11,10 +11,11 @@ import { ViewUser } from '../view-user/view-user';
 import { EditUser } from '../edit-user/edit-user';
 import { ConfirmService } from '../../../../shared/services/confirm.service';
 import { ToastService } from '../../../../shared/services/toast.service';
+import { HasPermissionDirective } from '../../../../core/directives/has-permission.directive';
 
 @Component({
   selector: 'app-user',
-  imports: [DataTable],
+  imports: [HasPermissionDirective,DataTable],
   templateUrl: './user.html',
   styleUrl: './user.css',
 })
