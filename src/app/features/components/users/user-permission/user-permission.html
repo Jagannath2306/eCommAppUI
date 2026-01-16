@@ -1,1 +1,188 @@
-<p>user-permission works!</p>
+<div class="row">
+  <div class="col-12 d-flex justify-content-between p-2">
+    <h3 class="m-0">User Permissions</h3>
+  </div>
+</div>
+<div class="container mt-4">
+  <form [formGroup]="filterForm" (ngSubmit)="onSearch()">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <label for="types" class="form-label text-primary"
+          >User Type <span class="text-danger">*</span></label
+        >
+        <div class="input-group">
+          <select
+            class="form-select custom-select text-uppercase"
+            formControlName="userTypeId"
+            id="types"
+            [ngClass]="{
+              'is-invalid': (f.userTypeId.touched || submitted) && f.userTypeId.invalid
+            }"
+          >
+            <option value="" disabled selected>Select User Type</option>
+            @for (type of userTypes(); track type._id) {
+            <option [value]="type._id" class="text-uppercase">{{ type.name }}</option>
+            } @empty {
+            <option disabled>No Types found</option>
+            }
+          </select>
+          @if ((f.userTypeId.touched || submitted) && f.userTypeId.errors) {
+          <div class="invalid-feedback d-block">
+            @if (f.userTypeId.errors['required']) {User Type Name is required }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <label for="module" class="form-label text-primary"
+          >Module<span class="text-danger">*</span></label
+        >
+        <div class="input-group">
+          <select
+            class="form-select custom-select text-uppercase"
+            formControlName="moduleId"
+            id="module"
+            [ngClass]="{
+              'is-invalid': (f.moduleId.touched || submitted) && f.moduleId.invalid
+            }"
+          >
+            <option value="" disabled selected>Select Module</option>
+            @for (module of modules(); track module._id) {
+            <option [value]="module._id" class="text-uppercase">{{ module.name }}</option>
+            } @empty {
+            <option disabled>No Module found</option>
+            }
+          </select>
+          @if ((f.moduleId.touched || submitted) && f.moduleId.errors) {
+          <div class="invalid-feedback d-block">
+            @if (f.moduleId.errors['required']) { Module Name is required }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label for="submodule" class="form-label text-primary"
+          >Sub-Module<span class="text-danger">*</span></label
+        >
+        <div class="input-group">
+          <select
+            class="form-select custom-select text-uppercase"
+            formControlName="subModuleId"
+            id="submodule"
+            [ngClass]="{
+              'is-invalid': (f.subModuleId.touched || submitted) && f.subModuleId.invalid
+            }"
+          >
+            <option value="" disabled selected>Select SubModule</option>
+            @for (subModule of subModules(); track subModule._id) {
+            <option [value]="subModule._id" class="text-uppercase">{{ subModule.name }}</option>
+            } @empty {
+            <option disabled>No SubModule found</option>
+            }
+          </select>
+          @if ((f.subModuleId.touched || submitted) && f.subModuleId.errors) {
+          <div class="invalid-feedback d-block">
+            @if (f.subModuleId.errors['required']) { SubModule Name is required }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="col-3 mt-auto">
+        <button
+          type="submit"
+          class="btn btn-primary text-white float-end"
+          [disabled]="filterForm.invalid"
+        >
+          <i class="bi bi-search"></i> Search Permissions
+        </button>
+      </div>
+      <div class="col-12 mt-3">
+        <hr class="text-muted opacity-25" />
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container mt-2" [formGroup]="permissionForm">
+  <div class="table-responsive rounded-1">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="bg-primary text-white">
+        <tr>
+          <th class="small text-white">Page Name</th>
+          <th class="small text-white">Page Code</th>
+          <th class="text-center small text-white">View</th>
+          <th class="text-center small text-white">Create</th>
+          <th class="text-center small text-white">Edit</th>
+          <th class="text-center small text-white">Delete</th>
+          <th class="text-center small text-white">Block</th>
+          <th class="text-center small text-white">Unblock</th>
+          <th class="text-center small text-white">Approve</th>
+          <th class="text-center small text-white">Reject</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="pages">
+        <tr *ngFor="let page of pagesFormArray.controls; let i = index" [formGroupName]="i">
+          <td class="fw-bold text-secondary">
+            {{ page.get('name')?.value }}
+            <!-- <br><small class="text-muted">{{ page.get('pageCode')?.value }}</small> -->
+          </td>
+          <td class="fw-bold text-secondary">
+            <small class="text-muted">{{ page.get('pageCode')?.value }}</small>
+          </td>
+
+          <ng-container formGroupName="actions">
+            <td class="text-center">
+              <input type="checkbox" formControlName="view" class="form-check-input custom-chk" />
+            </td>
+            <td class="text-center">
+              <input type="checkbox" formControlName="create" class="form-check-input custom-chk" />
+            </td>
+            <td class="text-center">
+              <input type="checkbox" formControlName="edit" class="form-check-input custom-chk" />
+            </td>
+            <td class="text-center">
+              <input type="checkbox" formControlName="delete" class="form-check-input custom-chk" />
+            </td>
+            <td class="text-center">
+              <input type="checkbox" formControlName="block" class="form-check-input custom-chk" />
+            </td>
+            <td class="text-center">
+              <input
+                type="checkbox"
+                formControlName="unblock"
+                class="form-check-input custom-chk"
+              />
+            </td>
+            <td class="text-center">
+              <input
+                type="checkbox"
+                formControlName="approve"
+                class="form-check-input custom-chk"
+              />
+            </td>
+            <td class="text-center">
+              <input type="checkbox" formControlName="reject" class="form-check-input custom-chk" />
+            </td>
+          </ng-container>
+        </tr>
+        <tr *ngIf="pagesFormArray.length === 0">
+          <td colspan="10" class="text-center">
+            <div class="text-muted">
+              <i class="bi bi-folder-x display-6 d-block"></i>
+              <p class="mb-0 fw-bold">No permission found for the selected criteria.</p>
+              <small>Please adjust your filters and try again.</small>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-12 d-flex justify-content-end bg-white p-3">
+    <button class="btn btn-primary px-5" (click)="onSave()">
+      <i class="bi bi-save me-2"></i> Save Permissions
+    </button>
+  </div>
+</div>

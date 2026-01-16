@@ -3,24 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { ToastService } from '../../shared/services/toast.service';
-import {
-  UserDeleteResponse,
-  UserInfo,
-  UserInfoResponse,
-  UsersResponse,
-  UserTypesResponse,
-} from '../models/user.model';
-import { RegisterResponse } from '../../core/models/auth.model';
+import { ModuleList, PageList, PermissionList, SubModuleList } from '../models/permission.model';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class PermissionService {
   private http = inject(HttpClient);
   private toast = inject(ToastService);
   private baseUrl = environment.apiBaseUrl;
-  
 
-  getUsers(pageSize?: number, page?: number, sortCol?: string, sort?: string) {
-    return this.http.get<UsersResponse>(`${this.baseUrl}/User/GetUsers`, {}).pipe(
+  getModules() {
+    return this.http.get<ModuleList>(`${this.baseUrl}/ModuleMaster/GetModules`).pipe(
       tap((response) => {
         if (response.success && response.data) {
         } else {
@@ -29,20 +21,9 @@ export class UserService {
       })
     );
   }
-  getUserTypes() {
-    return this.http.get<UserTypesResponse>(`${this.baseUrl}/UserType/GetUserTypes`, {}).pipe(
-      tap((response) => {
-        if (response.success && response.data) {
-        } else {
-          console.error(response.message);
-        }
-      })
-    );
-  }
-
-  getUser(id: string) {
+  getSubModules(id: string) {
     return this.http
-      .post<UserInfoResponse<UserInfo>>(`${this.baseUrl}/User/GetUserById`, { id }, {})
+      .post<SubModuleList>(`${this.baseUrl}/SubModuleMaster/GetSubModuleByModuleId`, { id })
       .pipe(
         tap((response) => {
           if (response.success && response.data) {
@@ -52,13 +33,11 @@ export class UserService {
         })
       );
   }
-
-  updateUser(id: string, firstName: string, lastName: string, userTypeId: string) {
+  getPages(moduleId: string, subModuleId: string, userTypeId: string) {
     return this.http
-      .post<RegisterResponse>(`${this.baseUrl}/User/UpdateProfile`, {
-        id,
-        firstName,
-        lastName,
+      .post<PageList>(`${this.baseUrl}/PageMaster/GetPageByModuleIdBySubModuleIdByUserTypeId`, {
+        moduleId,
+        subModuleId,
         userTypeId,
       })
       .pipe(
@@ -70,10 +49,12 @@ export class UserService {
         })
       );
   }
-  deleteUser(id: string) {
+  saveAndUpdatePermissions(userTypeId: any, permissions:any) {
+    console.log(userTypeId, permissions)
     return this.http
-      .put<UserDeleteResponse>(`${this.baseUrl}/User/DeteteUserById`, {
-        id,
+      .post<PermissionList>(`${this.baseUrl}/RolePermission/SaveAndUpdatePermissions`, {
+        userTypeId,
+        permissions,
       })
       .pipe(
         tap((response) => {

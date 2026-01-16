@@ -1,15 +1,33 @@
-import { Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from "@angular/core";
-import { Subscription } from "rxjs";
-import { PermissionService } from "../services/permission/permission.service";
+import {
+  Directive,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewContainerRef
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { PermissionService } from '../services/permission/permission.service';
+
+type Action =
+  | 'view'
+  | 'create'
+  | 'edit'
+  | 'delete'
+  | 'approve'
+  | 'reject'
+  | 'block'
+  | 'unblock';
 
 @Directive({
   selector: '[hasPermission]',
   standalone: true
 })
 export class HasPermissionDirective implements OnInit, OnDestroy {
+
   private sub!: Subscription;
 
-  @Input('hasPermission') permission!: [string, string];
+  @Input('hasPermission') permission!: [string, Action];
 
   constructor(
     private tpl: TemplateRef<any>,
@@ -18,14 +36,17 @@ export class HasPermissionDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.sub = this.permissionService.permissionsReady$().subscribe(() => {
-      this.vcr.clear();
+    this.sub = this.permissionService.permissionsReady$()
+      .subscribe(loaded => {
+        if (!loaded) return;
 
-      const [pageCode, action] = this.permission;
-      if (this.permissionService.hasPermission(pageCode, action)) {
-        this.vcr.createEmbeddedView(this.tpl);
-      }
-    });
+        this.vcr.clear();
+
+        const [pageCode, action] = this.permission;
+        if (this.permissionService.hasPermission(pageCode, action)) {
+          this.vcr.createEmbeddedView(this.tpl);
+        }
+      });
   }
 
   ngOnDestroy() {
