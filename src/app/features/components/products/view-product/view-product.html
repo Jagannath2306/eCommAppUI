@@ -1,0 +1,91 @@
+<app-modal title="Product Info" confirmText="Create Product" mode="view">
+  @if (product(); as p) {
+    <div class="container-fluid py-2">
+      <div class="row g-4">
+        <div class="col-md-5">
+          <div class="card border-0 p-2 ">
+            <div class="main-img-box text-center mb-2">
+              <img
+                [src]="baseURL + (selectedImage() || p.imagePaths[0])"
+                class="img-fluid rounded shadow-sm"
+                style="max-height: 350px; object-fit: contain"
+              />
+            </div>
+
+            @if (p.imagePaths.length > 1) {
+              <div class="d-flex justify-content-center gap-2 mt-2">
+                @for (img of p.imagePaths; track img) {
+                  <img
+                    [src]="baseURL + img"
+                    (click)="selectedImage.set(img)"
+                    class="img-thumbnail border-2"
+                    [class.border-primary]="selectedImage() === img"
+                    style="width: 60px; height: 60px; cursor: pointer; object-fit: cover"
+                  />
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="col-md-7">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h3 class="fw-bold text-primary mb-0">{{ p.name }}</h3>
+              <small class="text-muted text-uppercase fw-bold">SKU: {{ p.code }}</small>
+            </div>
+            <span class="badge" [ngClass]="p.isActive ? 'bg-success' : 'bg-danger'">
+              {{ p.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </div>
+
+          <p class="text-secondary mt-2 lead">{{ p.title }}</p>
+
+          <div class="price-box my-3 p-3 rounded bg-primary-subtle d-flex align-items-center gap-3">
+            <h2 class="mb-0 fw-bold text-primary">₹{{ p.salePrice }}</h2>
+            <span class="text-decoration-line-through text-muted">₹{{ p.price }}</span>
+            <span class="badge bg-danger rounded-pill">{{ p.discount }}% OFF</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <div class="mb-3">
+              <label class="fw-bold small text-uppercase text-muted d-block">Categories</label>
+              @for (cat of p.categoryIds; track cat._id) {
+                <span class="badge bg-dark me-1 text-capitalize">{{ cat.name }}</span>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label class="fw-bold small text-uppercase text-muted d-block">Tags</label>
+              @for (tag of p.tagIds; track tag._id) {
+                <span class="badge bg-info text-dark text-capitalize border border-info me-1">{{ tag.name }}</span>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="p-3 bg-white">
+            <h6 class="fw-bold">Short Summary:</h6>
+            <p>{{ p.shortDetails }}</p>
+            <hr />
+            <h6 class="fw-bold">Description:</h6>
+            <p class="m-0">{{ p.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal-footer justify-content-between bg-light mt-3 py-2 px-3 border-top rounded-bottom"
+    >
+      <div class="">
+        <i class="bi bi-person me-1"></i>By:
+        <strong>{{ p.createdBy?.firstName }} {{ p.createdBy?.lastName }}</strong>
+      </div>
+      <div class="small text-muted"><i class="bi bi-clock me-1"></i>{{ p.createdOnFormatted }}</div>
+    </div>
+  } @else {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-2 text-muted">Loading product details...</p>
+    </div>
+  }
+</app-modal>

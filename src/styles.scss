@@ -27,8 +27,8 @@
   $border-color-translucent: rgba(8, 205, 189, 0.25),
   /* ===============================
      BUTTONS
-  =============================== */ $btn-color:
-    #ffffff,
+  =============================== */
+    $btn-color: #ffffff,
   $btn-link-color: #08cdbd,
   $btn-link-hover-color: #069f93,
 
@@ -45,8 +45,8 @@
 
   /* ===============================
      DROPDOWNS
-  =============================== */ $dropdown-bg:
-    #ffffff,
+  =============================== */
+    $dropdown-bg: #ffffff,
   $dropdown-border-color: #08cdbd,
   $dropdown-link-color: #08cdbd,
   $dropdown-link-hover-color: #ffffff,
@@ -65,8 +65,8 @@
 
   /* ===============================
      TABLES
-  =============================== */ $table-bg:
-    transparent,
+  =============================== */
+    $table-bg: transparent,
   $table-color: #073b3a,
   $table-border-color: #cfeeed,
   $table-striped-bg: #e6fbf9,
@@ -76,8 +76,8 @@
 
   /* ===============================
      ALERTS
-  =============================== */ $alert-bg-scale:
-    -80%,
+  =============================== */
+    $alert-bg-scale: -80%,
   $alert-border-scale: -60%,
   $alert-color-scale: 40%,
 
@@ -131,7 +131,9 @@
   background-color: transparent !important;
   padding-left: 0;
   padding-right: 0;
-  transition: border-bottom 0.4s ease-in-out, border-width 0.4s ease-in-out !important;
+  transition:
+    border-bottom 0.4s ease-in-out,
+    border-width 0.4s ease-in-out !important;
 }
 
 /* Style for when the user clicks inside the input */
@@ -147,7 +149,9 @@
   background-color: transparent !important;
   padding-left: 0;
   padding-right: 0;
-  transition: border-bottom 0.4s ease-in-out, border-width 0.4s ease-in-out !important;
+  transition:
+    border-bottom 0.4s ease-in-out,
+    border-width 0.4s ease-in-out !important;
 }
 
 /* Style for when the user clicks inside the input */
@@ -226,4 +230,101 @@ a {
   cursor: pointer;
 }
 
+.highcharts-container {
+  border-radius: 6px !important;
+}
+
+/* --- Custom styling for ng-select to match your underline theme --- */
+
+.ng-select .ng-select-container {
+  border: none !important;
+  border-bottom: 1px solid #308c84 !important; /* Your primary green */
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  padding-left: 0;
+  padding-right: 0;
+  min-height: 38px;
+  align-items: flex-end; /* Keeps text near the line */
+  transition:
+    border-bottom 0.4s ease-in-out,
+    border-width 0.4s ease-in-out !important;
+}
+
+/* Style for when the ng-select is focused/opened */
+.ng-select.ng-select-focused .ng-select-container {
+  box-shadow: none !important;
+  border-bottom: 3px solid #08cdbd !important; /* Your bright highlight green */
+  outline: none;
+}
+
+/* Handling the internal padding and text alignment */
+.ng-select .ng-select-container .ng-value-container {
+  padding-left: 0 !important;
+  padding-bottom: 5px; /* Adjusts text distance from the underline */
+}
+
+/* Placeholder styling */
+.ng-select .ng-placeholder {
+  color: #6c757d;
+  padding-left: 0;
+}
+
+/* Adjusting the multi-select "Tags" to look better with the underline */
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+  background-color: #308c84 !important; /* Solid theme color for selected tags */
+  color: white;
+  border-radius: 2px;
+  margin-bottom: 5px;
+}
+
+/* Removing the default focus shadow that ng-select adds internally */
+.ng-select.ng-select-opened > .ng-select-container {
+  border-bottom: 3px solid #08cdbd !important;
+  z-index: 1001;
+}
+
+/* Styling the clear and arrow icons to match your theme color */
+.ng-select .ng-clear-wrapper .ng-clear,
+.ng-select .ng-arrow-wrapper .ng-arrow {
+  color: #308c84;
+}
+
+/* Force the dropdown panel to be visible */
+.ng-dropdown-panel {
+  background-color: #ffffff !important; /* Ensure background isn't transparent */
+  border: 1px solid #dee2e6 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  z-index: 9999 !important; /* Stand above everything else */
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure the text inside the options is visible */
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  padding: 10px 15px !important;
+}
+
+/* Style for the hovered/highlighted option */
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background-color: #e9ecef !important;
+  color: #308c84 !important; /* Match your green theme */
+}
+
+/* Style for selected options in the list */
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
+  background-color: #f1f1f1 !important;
+  font-weight: bold;
+}
+
+/* Target the underline of ng-select when it has the is-invalid class */
+.ng-select.is-invalid .ng-select-container {
+  border-bottom: 1px solid #f36716 !important; /* Red underline */
+}
+
+/* Ensure it stays red when focused while invalid */
+.ng-select.is-invalid.ng-select-focused .ng-select-container {
+  border-bottom: 1px solid #f36716 !important;
+}
 // ####################### Custom css Ends ###########################

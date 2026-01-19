@@ -3,94 +3,123 @@
     <thead class="table-light">
       <tr>
         @for (col of columns(); track col.key) {
-        <th
-          (click)="sort(col)"
-          [class.cursor-pointer]="col.sortable"
-          class="small text-white"
-        >
-          {{ col.label }}
-          @if (sortKey() === col.key) {
-          <i
-            class="bi ms-1 text-white"
-            [class.bi-sort-up]="sortDirection() === 'asc'"
-            [class.bi-sort-down]="sortDirection() === 'desc'"
-          ></i>
-          }
-        </th>
-        } @if (showActions()) {
-        <th class="px-2 text-white small">Actions</th>
+          <th (click)="sort(col)" [class.cursor-pointer]="col.sortable" class="small text-white">
+            {{ col.label }}
+            @if (sortKey() === col.key) {
+              <i
+                class="bi ms-1 text-white"
+                [class.bi-sort-up]="sortDirection() === 'asc'"
+                [class.bi-sort-down]="sortDirection() === 'desc'"
+              ></i>
+            }
+          </th>
+        }
+        @if (showActions()) {
+          <th class="px-2 text-white small">Actions</th>
         }
       </tr>
     </thead>
     <tbody>
       @for (row of paginatedData(); track row['_id'] || $index) {
-      <tr>
-        @for (col of columns(); track col.key) {
-        <td class="small">
-          @if (col.key === 'isActive') {
-          <span class="badge" [ngClass]="row[col.key] ? 'bg-success' : 'bg-danger'">
-            {{ row[col.key] ? 'Active' : 'Inactive' }}
-          </span>
-          } @else if (col.key === 'createdOn') {
-          {{ row[col.key] | date : 'mediumDate' }}
-          } @else {
-          {{ row[col.key] }}
+        <tr>
+          @for (col of columns(); track col.key) {
+            <td class="small">
+              @if (col.key === 'imagePaths') {
+                <div class="d-flex align-items-center">
+                  @if (row[col.key] && row[col.key].length > 0) {
+                    <img
+                      [src]="imageBaseUrl() + row[col.key][0]"
+                      class="rounded border shadow-sm"
+                      style="width: 40px; height: 40px; object-fit: cover"
+                      alt="Product Thumbnail"
+                    />
+                  } @else {
+                    <div
+                      class="bg-light border rounded d-flex align-items-center justify-content-center text-muted"
+                      style="width: 40px; height: 40px; font-size: 10px"
+                    >
+                      No Img
+                    </div>
+                  }
+                </div>
+              } @else if (col.key === 'isActive') {
+                <span class="badge" [ngClass]="row[col.key] ? 'bg-success' : 'bg-danger'">
+                  {{ row[col.key] ? 'Active' : 'Inactive' }}
+                </span>
+              } @else if (col.key === 'createdOn') {
+                {{ row[col.key] | date: 'mediumDate' }}
+              } @else if (col.key === 'discount') {
+                {{ row[col.key] }}{{ row[col.key] ? '%' : '' }}
+              } @else if (col.key === 'shortDetails') {
+                <div class="text-truncate" style="max-width: 200px" [attr.title]="row[col.key]">
+                  {{ row[col.key] }}
+                </div>
+              } @else {
+                {{ row[col.key] }}
+              }
+            </td>
           }
-        </td>
-        } @if (showActions()) {
-        <td class="px-2 small">
-          <button 
-          *hasPermission="['USER_LIST', 'edit']"
-          class="btn btn-sm btn-outline-primary me-2" (click)="edit.emit(row)">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <button 
-          *hasPermission="['USER_LIST', 'delete']"
-          class="btn btn-sm btn-outline-danger me-2" (click)="delete.emit(row)">
-            <i class="bi bi-trash"></i>
-          </button>
-          <button 
-          *hasPermission="['USER_LIST', 'view']"
-           class="btn btn-sm btn-outline-info" (click)="view.emit(row)">
-            <i class="bi bi-eye"></i>
-          </button>
-        </td>
-        }
-      </tr>
+          @if (showActions()) {
+            <td class="px-2 small width-fit-content">
+              <button
+                *hasPermission="[permissionModule, 'edit']"
+                class="btn btn-sm btn-outline-primary me-2"
+                (click)="edit.emit(row)"
+              >
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button
+                *hasPermission="[permissionModule, 'delete']"
+                class="btn btn-sm btn-outline-danger me-2"
+                (click)="delete.emit(row)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+              <button
+                *hasPermission="[permissionModule, 'view']"
+                class="btn btn-sm btn-outline-info"
+                (click)="view.emit(row)"
+              >
+                <i class="bi bi-eye"></i>
+              </button>
+            </td>
+          }
+        </tr>
       } @empty {
-      <tr>
-        <td [attr.colspan]="columns().length + 1" class="text-center py-5 text-muted">
-          No data available
-        </td>
-      </tr>
+        <tr>
+          <td [attr.colspan]="columns().length + 1" class="text-center py-5 text-muted">
+            No data available
+          </td>
+        </tr>
       }
     </tbody>
   </table>
 
   <div class="d-flex justify-content-between align-items-center p-3 border-top">
-  <small class="fw-bold small text-primary">
-    Showing {{ showingCount() }} of {{ data().length }} entries
-  </small>
+    <small class="fw-bold small text-primary">
+      Showing {{ showingCount() }} of {{ data().length }} entries
+    </small>
 
-  <nav>
-    <ul class="pagination pagination-sm mb-0">
-      <li class="page-item" [class.disabled]="currentPage() === 1">
-        <button class="page-link" (click)="prevPage()" aria-label="Previous">
-          <i class="bi bi-arrow-left-circle"></i>
-        </button>
-      </li>
-
-      @for (p of pageNumbers(); track p) {
-        <li class="page-item" [class.active]="currentPage() === p">
-          <button class="page-link" (click)="changePage(p)">{{ p }}</button>
+    <nav>
+      <ul class="pagination pagination-sm mb-0">
+        <li class="page-item" [class.disabled]="currentPage() === 1">
+          <button class="page-link" (click)="prevPage()" aria-label="Previous">
+            <i class="bi bi-arrow-left-circle"></i>
+          </button>
         </li>
-      }
 
-      <li class="page-item" [class.disabled]="currentPage() === totalPages()">
-        <button class="page-link" (click)="nextPage()" aria-label="Next">
-          <i class="bi bi-arrow-right-circle"></i>
-        </button>
-      </li>
-    </ul>
-  </nav>
+        @for (p of pageNumbers(); track p) {
+          <li class="page-item" [class.active]="currentPage() === p">
+            <button class="page-link" (click)="changePage(p)">{{ p }}</button>
+          </li>
+        }
+
+        <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+          <button class="page-link" (click)="nextPage()" aria-label="Next">
+            <i class="bi bi-arrow-right-circle"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </div>

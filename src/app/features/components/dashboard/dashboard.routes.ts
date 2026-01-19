@@ -3,6 +3,7 @@ import { User } from '../users/user/user';
 import { UserPermission } from '../users/user-permission/user-permission';
 import { UserActivity } from '../users/user-activity/user-activity';
 import { UserDashboard } from '../user-dashboard/user-dashboard';
+import { Products } from '../products/products';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -25,5 +26,13 @@ export const DASHBOARD_ROUTES: Routes = [
   {
     path: 'activity',
     component: UserActivity,
+  },
+  {
+    path: 'product',
+    component: Products,
+  },
+  {
+    path: 'category',
+    component: Products,
   },
 ];

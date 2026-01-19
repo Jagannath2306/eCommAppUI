@@ -1,19 +1,20 @@
-import { Component, computed, EventEmitter, input, Output, signal } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Input, input, Output, Signal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableColumn } from '../../models/table-column.model';
 import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [CommonModule,HasPermissionDirective],
+  imports: [CommonModule, HasPermissionDirective],
   templateUrl: './data-table.html',
   styleUrl: './data-table.css',
 })
 export class DataTable {
-  /* Signal Inputs (Available in Angular 17.1+) */
+  private sanitizer = inject(DomSanitizer);
   columns = input<TableColumn[]>([]);
-  // data = input<Record<string, any>[]>([]);
+@Input() imageBaseUrl!: Signal<string>;
   readonly data = input<any[]>([]);
   pageSize = input(5);
   showActions = input(true);
@@ -22,6 +23,7 @@ export class DataTable {
   @Output() edit = new EventEmitter<Record<string, any>>();
   @Output() delete = new EventEmitter<Record<string, any>>();
   @Output() view = new EventEmitter<Record<string, any>>();
+  @Input() permissionModule: string = '';
 
   /* State */
   currentPage = signal(1);
@@ -49,23 +51,17 @@ export class DataTable {
     return this.sortedData().slice(start, start + this.pageSize());
   });
 
-  totalPages = computed(() =>
-    Math.max(1, Math.ceil(this.data().length / this.pageSize()))
-  );
+  totalPages = computed(() => Math.max(1, Math.ceil(this.data().length / this.pageSize())));
 
-  pageNumbers = computed(() => 
-    Array.from({ length: this.totalPages() }, (_, i) => i + 1)
-  );
+  pageNumbers = computed(() => Array.from({ length: this.totalPages() }, (_, i) => i + 1));
 
-  showingCount = computed(() =>
-    Math.min(this.currentPage() * this.pageSize(), this.data().length)
-  );
+  showingCount = computed(() => Math.min(this.currentPage() * this.pageSize(), this.data().length));
 
   /* Methods */
   sort(column: TableColumn) {
     if (!column.sortable) return;
     if (this.sortKey() === column.key) {
-      this.sortDirection.update(d => d === 'asc' ? 'desc' : 'asc');
+      this.sortDirection.update((d) => (d === 'asc' ? 'desc' : 'asc'));
     } else {
       this.sortKey.set(column.key);
       this.sortDirection.set('asc');
@@ -79,15 +75,18 @@ export class DataTable {
     }
   }
   /* Methods */
-prevPage() {
-  if (this.currentPage() > 1) {
-    this.currentPage.update(p => p - 1);
+  prevPage() {
+    if (this.currentPage() > 1) {
+      this.currentPage.update((p) => p - 1);
+    }
   }
-}
 
-nextPage() {
-  if (this.currentPage() < this.totalPages()) {
-    this.currentPage.update(p => p + 1);
+  nextPage() {
+    if (this.currentPage() < this.totalPages()) {
+      this.currentPage.update((p) => p + 1);
+    }
   }
-}
+  getImageUrl(fileName: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl(this.imageBaseUrl() + fileName);
+  }
 }

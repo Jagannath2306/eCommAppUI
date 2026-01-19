@@ -27,7 +27,7 @@ export class User {
   private confirmService = inject(ConfirmService);
   private toast = inject(ToastService);
   users = signal<UserList[]>([]);
-
+  permissionModule: string = 'USER_LIST';
   // Header config
   columns: TableColumn[] = [
     { key: 'firstName', label: 'First Name', sortable: true },

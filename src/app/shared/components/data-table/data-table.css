@@ -42,3 +42,6 @@ td, th {
   border-color: #abd5d1;
   cursor: not-allowed;
 }
+.width-fit-content{
+  width: 130px;
+}

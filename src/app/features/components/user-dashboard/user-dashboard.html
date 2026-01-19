@@ -1,1 +1,45 @@
-<p>user-dashboard works!</p>
+<div class="body">
+    <div class="container mt-2">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between w-100">
+        <div class="align-items-center shadow-lg card card-count d-flex justify-content-center text-primary"
+        >
+          <h4 class="m-0">01</h4>
+          <p class="m-0">Super Admin</p>
+        </div>
+        <div
+          class="align-items-center shadow-lg card card-count d-flex justify-content-center text-primary"
+        >
+          <h4 class="m-0">02</h4>
+          <p class="m-0">Admin</p>
+        </div>
+        <div
+          class="align-items-center shadow-lg card card-count d-flex justify-content-center text-primary"
+        >
+          <h4 class="m-0">20</h4>
+          <p class="m-0">Staff</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mt-3 mb-3">
+  <div class="row">
+    <div class="col-5">
+      <div class="card shadow-lg border-0 chart-box rounded">
+        <highcharts-chart
+          [options]="chartOptionsPie"
+        ></highcharts-chart>
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="card shadow-lg border-0 chart-box rounded">
+        <highcharts-chart
+          [options]="chartOptions"
+        ></highcharts-chart>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

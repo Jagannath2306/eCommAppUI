@@ -1,0 +1,15 @@
+.body{
+    /* background-color: rgb(244, 239, 239); */
+}
+.card-count{
+    height: 90px;
+    width: 32%;
+}
+.chart-box {
+    height: 290px;
+    width: 100%;
+}
+
+.highcharts-container {
+    border-radius: 20px !important;
+}

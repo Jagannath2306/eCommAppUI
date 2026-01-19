@@ -1,0 +1,259 @@
+<app-modal
+  title="Edit User"
+  confirmText="Update User"
+  mode="edit"
+  [disableConfirm]="productForm.invalid"
+  (confirm)="onSubmit()"
+>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label text-primary"
+          >Product Name <span class="text-danger">*</span></label
+        >
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': (f['name'].touched || isSubmitting) && f['name'].invalid,
+          }"
+        />
+        @if ((f['name']?.touched || isSubmitting) && f['name']?.errors) {
+          <div class="text-danger small">
+            @if (f['name']?.errors?.['required']) {
+              <span>Name is required.</span>
+            }
+            @if (f['name']?.errors?.['minlength']) {
+              <span>Minimum 3 characters needed.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label text-primary">Code (SKU)<span class="text-danger">*</span></label>
+        <input
+          type="text"
+          formControlName="code"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': (f['code'].touched || isSubmitting) && f['code'].invalid,
+          }"
+        />
+        @if ((f['code']?.touched || isSubmitting) && f['code']?.errors) {
+          <div class="text-danger small">
+            @if (f['code']?.errors?.['required']) {
+              <span>Code is required.</span>
+            }
+            @if (f['code']?.errors?.['minlength']) {
+              <span>Minimum 3 characters needed.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-12 mb-3">
+        <label class="form-label text-primary">Title <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          formControlName="title"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': (f['title'].touched || isSubmitting) && f['title'].invalid,
+          }"
+        />
+        @if ((f['title']?.touched || isSubmitting) && f['title']?.errors) {
+          <div class="text-danger small">
+            @if (f['title']?.errors?.['required']) {
+              <span>Title is required.</span>
+            }
+            @if (f['title']?.errors?.['maxlength']) {
+              <span>Maximum 150 characters allowed.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label text-primary">Price <span class="text-danger">*</span></label>
+        <div class="input-group">
+          <input
+            type="number"
+            formControlName="price"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': (f['price'].touched || isSubmitting) && f['price'].invalid,
+            }"
+          />
+        </div>
+        @if ((f['price']?.touched || isSubmitting) && f['price']?.errors) {
+          <div class="text-danger small">
+            @if (f['price']?.errors?.['required']) {
+              <span>Price is required.</span>
+            }
+            @if (f['price']?.errors?.['min']) {
+              <span>Price must be greater than 0.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label text-primary">Sale Price <span class="text-danger">*</span></label>
+        <div class="input-group">
+          <input
+            type="number"
+            formControlName="salePrice"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': (f['salePrice'].touched || isSubmitting) && f['salePrice'].invalid,
+            }"
+          />
+        </div>
+        @if ((f['salePrice']?.touched || isSubmitting) && f['salePrice']?.errors) {
+          <div class="text-danger small">
+            @if (f['salePrice']?.errors?.['required']) {
+              <span>Sale Price is required.</span>
+            }
+            @if (f['salePrice']?.errors?.['min']) {
+              <span>Sale Price must be greater than 0.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label text-primary">Categories <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="categories"
+          bindLabel="name"
+          bindValue="_id"
+          [multiple]="true"
+          formControlName="categoryIds"
+          appendTo="body"
+          [ngClass]="{
+            'is-invalid': (f['categoryIds'].touched || isSubmitting) && f['categoryIds'].invalid,
+          }"
+        >
+        </ng-select>
+        @if ((f['categoryIds']?.touched || isSubmitting) && f['categoryIds']?.errors) {
+          <div class="text-danger small">
+            @if (f['categoryIds']?.errors?.['required']) {
+              <span>Category is required.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label text-primary">Tags <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="tags"
+          bindLabel="name"
+          bindValue="_id"
+          [multiple]="true"
+          formControlName="tagIds"
+          appendTo="body"
+          [ngClass]="{
+            'is-invalid': (f['tagIds'].touched || isSubmitting) && f['tagIds'].invalid,
+          }"
+        >
+        </ng-select>
+        @if ((f['tagIds']?.touched || isSubmitting) && f['tagIds']?.errors) {
+          <div class="text-danger small">
+            @if (f['tagIds']?.errors?.['required']) {
+              <span>Tag is required.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-12 mb-3">
+        <label class="form-label text-primary"
+          >Short Description <span class="text-danger">*</span></label
+        >
+        <textarea
+          formControlName="shortDetails"
+          class="form-control"
+          rows="1"
+          [ngClass]="{
+            'is-invalid': (f['shortDetails'].touched || isSubmitting) && f['shortDetails'].invalid,
+          }"
+        ></textarea>
+        @if ((f['shortDetails']?.touched || isSubmitting) && f['shortDetails']?.errors) {
+          <div class="text-danger small">
+            @if (f['shortDetails']?.errors?.['required']) {
+              <span>Short Description is required.</span>
+            }
+            @if (f['shortDetails']?.errors?.['min']) {
+              <span>Short Description must be greater than 5 characters.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-12 mb-3">
+        <label class="form-label text-primary">
+          Description <span class="text-danger">*</span></label
+        >
+        <textarea
+          formControlName="description"
+          class="form-control"
+          rows="1"
+          [ngClass]="{
+            'is-invalid': (f['description'].touched || isSubmitting) && f['description'].invalid,
+          }"
+        ></textarea>
+        @if ((f['description']?.touched || isSubmitting) && f['description']?.errors) {
+          <div class="text-danger small">
+            @if (f['description']?.errors?.['required']) {
+              <span>Description is required.</span>
+            }
+            @if (f['description']?.errors?.['min']) {
+              <span>Description must be greater than 5 characters.</span>
+            }
+          </div>
+        }
+      </div>
+
+      @if (existingImages.length > 0) {
+        <div class="col-12 mb-3">
+          <label class="form-label text-primary small">Current Gallery</label>
+          <div class="d-flex gap-2">
+            @for (img of existingImages; track img; let i = $index) {
+              <div class="position-relative">
+                <img
+                  [src]="img"
+                  class="img-thumbnail"
+                  style="width: 60px; height: 60px; object-fit: cover"
+                />
+                <span
+                  class="badge bg-danger position-absolute top-0 start-100 translate-middle cursor-pointer"
+                  (click)="removeExistingImage(i)"
+                  >&times;</span
+                >
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="col-12 mb-4">
+        <label class="form-label text-primary">Upload Images</label>
+        <input
+          type="file"
+          class="form-control px-3"
+          multiple
+          (change)="onFileSelect($event)"
+          accept="image/*"
+        />
+        <div class="d-flex gap-2 mt-2">
+          @for (url of previews; track url) {
+            <img [src]="url" class="img-thumbnail" style="width: 50px; height: 50px" />
+          }
+        </div>
+      </div>
+    </div>
+  </form>
+</app-modal>
