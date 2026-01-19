@@ -14,7 +14,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class DataTable {
   private sanitizer = inject(DomSanitizer);
   columns = input<TableColumn[]>([]);
-@Input() imageBaseUrl!: Signal<string>;
+  @Input() imageBaseUrl!: Signal<string>;
   readonly data = input<any[]>([]);
   pageSize = input(5);
   showActions = input(true);
@@ -23,7 +23,7 @@ export class DataTable {
   @Output() edit = new EventEmitter<Record<string, any>>();
   @Output() delete = new EventEmitter<Record<string, any>>();
   @Output() view = new EventEmitter<Record<string, any>>();
-  @Input() permissionModule: string = '';
+  @Input() permissionModule: string = 'PRODUCT_LIST';
 
   /* State */
   currentPage = signal(1);

@@ -30,7 +30,7 @@ export class Products {
   imageBaseUrl = signal('http://localhost:5000/');
   permissionModule: string = 'PRODUCT_LIST';
   columns: TableColumn[] = [
-    { key: 'imagePaths', label: 'Name' },
+    { key: 'imagePaths', label: 'Picture' },
     { key: 'name', label: 'Name', sortable: true },
     { key: 'title', label: 'Title', sortable: true },
     { key: 'price', label: 'Price' },
@@ -59,7 +59,7 @@ export class Products {
     });
   }
 
-  openCreateUser() {
+  openCreateProduct() {
     const modalRef = this.modalService.open(CreateProduct, {
       size: 'lg',
       backdrop: 'static',

@@ -4,6 +4,7 @@ import { UserPermission } from '../users/user-permission/user-permission';
 import { UserActivity } from '../users/user-activity/user-activity';
 import { UserDashboard } from '../user-dashboard/user-dashboard';
 import { Products } from '../products/products';
+import { Category } from '../category/category';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -33,6 +34,6 @@ export const DASHBOARD_ROUTES: Routes = [
   },
   {
     path: 'category',
-    component: Products,
+    component: Category,
   },
 ];

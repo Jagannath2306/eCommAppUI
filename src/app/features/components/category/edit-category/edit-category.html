@@ -1,0 +1,76 @@
+<app-modal
+  title="Edit Category"
+  confirmText="Update Category"
+  mode="edit"
+  [disableConfirm]="categoryForm.invalid"
+  (confirm)="onSubmit()"
+>
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label text-primary">Category Name <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': (f['name'].touched || submitted) && f['name'].invalid,
+          }"
+        />
+        @if ((f['name']?.touched || submitted) && f['name']?.errors) {
+          <div class="text-danger small">
+            @if (f['name']?.errors?.['required']) {
+              <span>Name is required.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label text-primary">Title <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          formControlName="title"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': (f['title'].touched || submitted) && f['title'].invalid,
+          }"
+        />
+        @if ((f['title']?.touched || submitted) && f['title']?.errors) {
+          <div class="text-danger small">
+            @if (f['title']?.errors?.['required']) {
+              <span>Title is required.</span>
+            }
+          </div>
+        }
+      </div>
+
+
+      <div class="col-12">
+        <label class="form-label fw-bold d-block">Category Image</label>
+        <div class="d-flex align-items-center gap-3">
+          <div
+            class="border rounded bg-light d-flex align-items-center justify-content-center"
+            style="width: 100px; height: 100px; overflow: hidden"
+          >
+            @if (imagePreview) {
+              <img [src]="imagePreview" class="img-fluid w-100 h-100 object-fit-cover" />
+            } @else {
+              <i class="bi bi-image text-muted fs-2"></i>
+            }
+          </div>
+
+          <div class="flex-grow-1">
+            <input
+              type="file"
+              class="form-control px-3"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+            />
+            <small class="text-muted">Leave empty to keep the current image.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-modal>

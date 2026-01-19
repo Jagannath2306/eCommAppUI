@@ -42,6 +42,24 @@
                     </div>
                   }
                 </div>
+              } @else if (col.key === 'imagePath') {
+                <div class="d-flex align-items-center">
+                  @if (row[col.key]) {
+                    <img
+                      [src]="imageBaseUrl() + row[col.key]"
+                      class="rounded border shadow-sm"
+                      style="width: 40px; height: 40px; object-fit: cover"
+                      alt="Product Thumbnail"
+                    />
+                  } @else {
+                    <div
+                      class="bg-light border rounded d-flex align-items-center justify-content-center text-muted"
+                      style="width: 40px; height: 40px; font-size: 10px"
+                    >
+                      No Img
+                    </div>
+                  }
+                </div>
               } @else if (col.key === 'isActive') {
                 <span class="badge" [ngClass]="row[col.key] ? 'bg-success' : 'bg-danger'">
                   {{ row[col.key] ? 'Active' : 'Inactive' }}
