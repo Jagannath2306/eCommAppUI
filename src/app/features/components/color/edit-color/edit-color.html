@@ -1,0 +1,56 @@
+<app-modal
+  title="Edit Color"
+  confirmText="Update Color"
+  mode="edit"
+  [disableConfirm]="colorForm.invalid"
+  (confirm)="onSubmit()"
+>
+  <form [formGroup]="colorForm" (ngSubmit)="onSubmit()">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label text-primary">Color Name <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': (f['name'].touched || submitted) && f['name'].invalid,
+          }"
+        />
+        @if ((f['name']?.touched || submitted) && f['name']?.errors) {
+          <div class="text-danger small">
+            @if (f['name']?.errors?.['required']) {
+              <span>Name is required.</span>
+            }@if (f['name']?.errors?.['minlength']) {
+            <span>Minimum 1 characters needed.</span>
+          }
+          </div>
+        }
+      </div>
+       <div class="col-md-6 mb-3">
+      <label class="form-label text-primary">Color Code <span class="text-danger">*</span></label>
+      <input
+        type="text"
+        formControlName="code"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': (f['code'].touched || submitted) && f['code'].invalid,
+        }"
+      />
+      @if ((f['code']?.touched || submitted) && f['code']?.errors) {
+        <div class="text-danger small">
+          @if (f['code']?.errors?.['required']) {
+            <span>Code is required.</span>
+          }
+          @if (f['code']?.errors?.['minlength']) {
+            <span>Minimum 7 characters needed.</span>
+          }
+          @if (f['code']?.errors?.['pattern']) {
+            <span>Invalid color code format.</span>
+          }
+        </div>
+      }
+    </div>
+    </div>
+  </form>
+</app-modal>

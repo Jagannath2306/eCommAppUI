@@ -1,0 +1,80 @@
+<app-modal title="Size Info" confirmText="Size" mode="view">
+  @if (size(); as p) {
+    <div class="container-fluid py-2">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card border-0 p-3 shadow-sm bg-light h-100 d-flex flex-column align-items-center justify-content-center text-center">
+            <div class="bg-primary bg-opacity-10 rounded-circle p-4 mb-3">
+              <i class="bi bi-box-seam text-primary fs-1"></i>
+            </div>
+            <h6 class="fw-bold mb-1">Status</h6>
+            <span class="badge px-3 py-2 rounded-pill" [ngClass]="p.isActive ? 'bg-success' : 'bg-danger'">
+              {{ p.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <h3 class="fw-bold text-primary mb-0 text-capitalize">{{ p.name }}</h3>
+              <small class="text-muted text-uppercase fw-bold font-monospace">UID: {{ p._id }}</small>
+            </div>
+          </div>
+
+          <div class="info-grid mt-4">
+            <div class="row">
+              <div class="col-6 border-end">
+                <label class="fw-bold small text-uppercase text-muted d-block mb-1">
+                  <i class="bi bi-calendar-plus me-1"></i>Created On
+                </label>
+                <p class="mb-0 fw-semibold text-dark">{{ p.createdOn | date:'mediumDate' }}</p>
+                <small class="text-muted">{{ p.createdOn | date:'shortTime' }}</small>
+              </div>
+              <div class="col-6 ps-4">
+                <label class="fw-bold small text-uppercase text-muted d-block mb-1">
+                  <i class="bi bi-calendar-check me-1"></i>Last Update
+                </label>
+                <p class="mb-0 fw-semibold text-dark">{{ p.updatedOn | date:'mediumDate' }}</p>
+                <small class="text-muted">{{ p.updatedOn | date:'shortTime' }}</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 p-3 rounded bg-light border d-flex align-items-center gap-3">
+            <i class="bi bi-envelope-at text-primary fs-4"></i>
+            <div>
+              <label class="fw-bold small text-uppercase text-muted d-block">Creator Contact</label>
+              <a [href]="'mailto:' + p.createdBy.email" class="text-decoration-none fw-bold">
+                {{ p.createdBy.email }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 mt-3">
+          <hr class="opacity-25">
+          <div class="modal-footer justify-content-between bg-light py-2 px-3 border rounded shadow-sm">
+            <div class="small">
+              <i class="bi bi-person-circle me-2 text-secondary"></i>
+              <span class="text-muted">Created By:</span>
+              <strong class="text-dark ms-1">
+                {{ p.createdBy.firstName }} {{ p.createdBy.lastName }}
+              </strong>
+            </div>
+            <div class="small font-monospace text-muted">
+              REF: {{ p.createdBy._id  }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2 text-muted fw-bold">Fetching property data...</p>
+    </div>
+  }
+</app-modal>

@@ -5,6 +5,9 @@ import { UserActivity } from '../users/user-activity/user-activity';
 import { UserDashboard } from '../user-dashboard/user-dashboard';
 import { Products } from '../products/products';
 import { Category } from '../category/category';
+import { Size } from '../size/size';
+import { Tag } from '../tag/tag';
+import { Color } from '../color/color';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -35,5 +38,17 @@ export const DASHBOARD_ROUTES: Routes = [
   {
     path: 'category',
     component: Category,
+  },
+  {
+    path: 'size',
+    component: Size,
+  },
+  {
+    path: 'tags',
+    component: Tag,
+  },
+  {
+    path: 'colors',
+    component: Color,
   },
 ];

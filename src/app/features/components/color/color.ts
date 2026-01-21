@@ -1,54 +1,52 @@
 import { Component, inject, signal } from '@angular/core';
+import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
+import { DataTable } from '../../../shared/components/data-table/data-table';
 import { ToastService } from '../../../shared/services/toast.service';
-import { ProductService } from '../../services/product.service';
+import { ColorService } from '../../services/color.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../shared/services/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmService } from '../../../shared/services/confirm.service';
-import { ProductList } from '../../models/product.modal';
+import { ColorList } from '../../models/color.model';
 import { TableColumn } from '../../../shared/models/table-column.model';
-import { CreateProduct } from './create-product/create-product';
-import { EditProduct } from './edit-product/edit-product';
-import { ViewProduct } from './view-product/view-product';
-import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
-import { DataTable } from '../../../shared/components/data-table/data-table';
+import { CreateColor } from './create-color/create-color';
+import { EditColor } from './edit-color/edit-color';
+import { ViewColor } from './view-color/view-color';
 
 @Component({
-  selector: 'app-products',
+  selector: 'app-color',
   imports: [HasPermissionDirective, DataTable],
-  templateUrl: './products.html', 
-  styleUrl: './products.css',
+  templateUrl: './color.html',
+  styleUrl: './color.css',
 })
-export class Products {
+export class Color {
   private toast = inject(ToastService);
-  private productService = inject(ProductService);
+  private colorService = inject(ColorService);
   private router = inject(Router);
   private alert = inject(AlertService);
   private modalService = inject(NgbModal);
   private confirmService = inject(ConfirmService);
-  products = signal<ProductList[]>([]);
+  colors = signal<ColorList[]>([]);
   imageBaseUrl = signal('http://localhost:5000/');
   permissionModule: string = 'PRODUCT_LIST';
   columns: TableColumn[] = [
-    { key: 'imagePaths', label: 'Picture' },
-    { key: 'name', label: 'Name', sortable: true },
-    { key: 'title', label: 'Title', sortable: true },
-    { key: 'price', label: 'Price' },
-    { key: 'shortDetails', label: 'Description' },
-    { key: 'discount', label: 'Discount' },
+    { key: 'name', label: 'Color Name', sortable: true },
+    { key: 'code', label: 'Code', sortable: true },
     { key: 'isActive', label: 'Active', sortable: true },
+    { key: 'createdOn', label: 'Created On', sortable: true },
   ];
 
   ngOnInit() {
-    this.getProducts();
+    this.getColors();
   }
-  getProducts() {
-    this.productService.getProducts().subscribe({
+
+  getColors() {
+    this.colorService.getColors().subscribe({
       next: (res) => {
         if (res.success) {
-          this.products.set(res.data || []);
+          this.colors.set(res.data || []);
         } else {
-          this.products.set([]);
+          this.colors.set([]);
           this.alert.error(res.message);
         }
       },
@@ -58,48 +56,48 @@ export class Products {
     });
   }
 
-  openCreateProduct() {
-    const modalRef = this.modalService.open(CreateProduct, {
+  openCreateColor() {
+    const modalRef = this.modalService.open(CreateColor, {
       size: 'lg',
       backdrop: 'static',
     });
 
     modalRef.result.then((result) => {
       if (result) {
-        this.getProducts();
+        this.getColors();
       }
     });
   }
 
-  onEdit(product: any) {
-    const modalRef = this.modalService.open(EditProduct, {
+  onEdit(color: any) {
+    const modalRef = this.modalService.open(EditColor, {
       size: 'lg',
       backdrop: 'static',
     });
-    modalRef.componentInstance.productId = product._id;
+    modalRef.componentInstance.colorId = color._id;
     modalRef.result.then((result) => {
       if (result) {
-        this.getProducts();
+        this.getColors();
       }
     });
   }
 
-  async onDelete(product: any) {
+  async onDelete(color: any) {
     const confirmed = await this.confirmService.confirm({
-      title: 'Delete Product',
+      title: 'Delete Color',
       message: 'Are you sure?',
       confirmText: 'Delete',
       confirmColor: '#f36716',
     });
 
     if (confirmed) {
-      this.productService.deleteProduct(product._id).subscribe({
+      this.colorService.deleteColor(color._id).subscribe({
         next: (res) => {
           if (res.success) {
             this.toast.success(res.message);
-            this.getProducts();
+            this.getColors();
           } else {
-            this.products.set([]);
+            this.colors.set([]);
             this.alert.error(res.message);
           }
         },
@@ -110,15 +108,15 @@ export class Products {
     }
   }
 
-  onView(product: any) {
-    const modalRef = this.modalService.open(ViewProduct, {
+  onView(color: any) {
+    const modalRef = this.modalService.open(ViewColor, {
       size: 'lg',
       backdrop: 'static',
     });
-    modalRef.componentInstance.productId = product._id;
+    modalRef.componentInstance.colorId = color._id;
     modalRef.result.then((result) => {
       if (result) {
-        this.getProducts();
+        this.getColors();
       }
     });
   }

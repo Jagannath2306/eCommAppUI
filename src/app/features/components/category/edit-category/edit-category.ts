@@ -101,7 +101,7 @@ export class EditCategory {
         this.toast.success(res.message);
       },
       error: (err: any) => {
-        alert(err.error?.message);
+        this.alert.error(err.error?.message);
         this.submitted = false;
       },
     });

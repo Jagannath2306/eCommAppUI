@@ -159,6 +159,7 @@ export class EditProduct {
       },
       error: (err: any) => {
         alert(err.error?.message);
+         this.alert.error(err.error?.message);
         this.isSubmitting = false;
       },
     });

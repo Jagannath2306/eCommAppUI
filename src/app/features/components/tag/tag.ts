@@ -1,54 +1,51 @@
 import { Component, inject, signal } from '@angular/core';
+import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
+import { DataTable } from '../../../shared/components/data-table/data-table';
 import { ToastService } from '../../../shared/services/toast.service';
-import { ProductService } from '../../services/product.service';
+import { TagService } from '../../services/tag.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../shared/services/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmService } from '../../../shared/services/confirm.service';
-import { ProductList } from '../../models/product.modal';
+import { TagList } from '../../models/tag.model';
 import { TableColumn } from '../../../shared/models/table-column.model';
-import { CreateProduct } from './create-product/create-product';
-import { EditProduct } from './edit-product/edit-product';
-import { ViewProduct } from './view-product/view-product';
-import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
-import { DataTable } from '../../../shared/components/data-table/data-table';
+import { CreateTag } from './create-tag/create-tag';
+import { EditTag } from './edit-tag/edit-tag';
+import { ViewTag } from './view-tag/view-tag';
 
 @Component({
-  selector: 'app-products',
+  selector: 'app-tag',
   imports: [HasPermissionDirective, DataTable],
-  templateUrl: './products.html', 
-  styleUrl: './products.css',
+  templateUrl: './tag.html',
+  styleUrl: './tag.css',
 })
-export class Products {
+export class Tag {
   private toast = inject(ToastService);
-  private productService = inject(ProductService);
+  private tagService = inject(TagService);
   private router = inject(Router);
   private alert = inject(AlertService);
   private modalService = inject(NgbModal);
   private confirmService = inject(ConfirmService);
-  products = signal<ProductList[]>([]);
+  tags = signal<TagList[]>([]);
   imageBaseUrl = signal('http://localhost:5000/');
   permissionModule: string = 'PRODUCT_LIST';
   columns: TableColumn[] = [
-    { key: 'imagePaths', label: 'Picture' },
     { key: 'name', label: 'Name', sortable: true },
-    { key: 'title', label: 'Title', sortable: true },
-    { key: 'price', label: 'Price' },
-    { key: 'shortDetails', label: 'Description' },
-    { key: 'discount', label: 'Discount' },
     { key: 'isActive', label: 'Active', sortable: true },
+    { key: 'createdOn', label: 'Created On', sortable: true },
   ];
 
   ngOnInit() {
-    this.getProducts();
+    this.getTags();
   }
-  getProducts() {
-    this.productService.getProducts().subscribe({
+
+  getTags() {
+    this.tagService.getTags().subscribe({
       next: (res) => {
         if (res.success) {
-          this.products.set(res.data || []);
+          this.tags.set(res.data || []);
         } else {
-          this.products.set([]);
+          this.tags.set([]);
           this.alert.error(res.message);
         }
       },
@@ -58,48 +55,48 @@ export class Products {
     });
   }
 
-  openCreateProduct() {
-    const modalRef = this.modalService.open(CreateProduct, {
+  openCreateTag() {
+    const modalRef = this.modalService.open(CreateTag, {
       size: 'lg',
       backdrop: 'static',
     });
 
     modalRef.result.then((result) => {
       if (result) {
-        this.getProducts();
+        this.getTags();
       }
     });
   }
 
-  onEdit(product: any) {
-    const modalRef = this.modalService.open(EditProduct, {
+  onEdit(tag: any) {
+    const modalRef = this.modalService.open(EditTag, {
       size: 'lg',
       backdrop: 'static',
     });
-    modalRef.componentInstance.productId = product._id;
+    modalRef.componentInstance.tagId = tag._id;
     modalRef.result.then((result) => {
       if (result) {
-        this.getProducts();
+        this.getTags();
       }
     });
   }
 
-  async onDelete(product: any) {
+  async onDelete(tag: any) {
     const confirmed = await this.confirmService.confirm({
-      title: 'Delete Product',
+      title: 'Delete Tag',
       message: 'Are you sure?',
       confirmText: 'Delete',
       confirmColor: '#f36716',
     });
 
     if (confirmed) {
-      this.productService.deleteProduct(product._id).subscribe({
+      this.tagService.deleteTag(tag._id).subscribe({
         next: (res) => {
           if (res.success) {
             this.toast.success(res.message);
-            this.getProducts();
+            this.getTags();
           } else {
-            this.products.set([]);
+            this.tags.set([]);
             this.alert.error(res.message);
           }
         },
@@ -110,15 +107,15 @@ export class Products {
     }
   }
 
-  onView(product: any) {
-    const modalRef = this.modalService.open(ViewProduct, {
+  onView(tag: any) {
+    const modalRef = this.modalService.open(ViewTag, {
       size: 'lg',
       backdrop: 'static',
     });
-    modalRef.componentInstance.productId = product._id;
+    modalRef.componentInstance.tagId = tag._id;
     modalRef.result.then((result) => {
       if (result) {
-        this.getProducts();
+        this.getTags();
       }
     });
   }

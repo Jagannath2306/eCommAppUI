@@ -23,7 +23,7 @@
       @for (row of paginatedData(); track row['_id'] || $index) {
         <tr>
           @for (col of columns(); track col.key) {
-            <td class="small">
+            <td class="small text-capitalize">
               @if (col.key === 'imagePaths') {
                 <div class="d-flex align-items-center">
                   @if (row[col.key] && row[col.key].length > 0) {

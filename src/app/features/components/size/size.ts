@@ -1,54 +1,51 @@
 import { Component, inject, signal } from '@angular/core';
+import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
 import { ToastService } from '../../../shared/services/toast.service';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../shared/services/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmService } from '../../../shared/services/confirm.service';
-import { ProductList } from '../../models/product.modal';
+import { SizeList } from '../../models/size.model';
 import { TableColumn } from '../../../shared/models/table-column.model';
-import { CreateProduct } from './create-product/create-product';
-import { EditProduct } from './edit-product/edit-product';
-import { ViewProduct } from './view-product/view-product';
-import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
+import { EditSize } from './edit-size/edit-size';
+import { ViewSize } from './view-size/view-size';
+import { CreateSize } from './create-size/create-size';
+import { SizeService } from '../../services/size.service';
 import { DataTable } from '../../../shared/components/data-table/data-table';
 
 @Component({
-  selector: 'app-products',
+  selector: 'app-size',
   imports: [HasPermissionDirective, DataTable],
-  templateUrl: './products.html', 
-  styleUrl: './products.css',
+  templateUrl: './size.html',
+  styleUrl: './size.css',
 })
-export class Products {
+export class Size {
   private toast = inject(ToastService);
-  private productService = inject(ProductService);
+  private sizeService = inject(SizeService);
   private router = inject(Router);
   private alert = inject(AlertService);
   private modalService = inject(NgbModal);
   private confirmService = inject(ConfirmService);
-  products = signal<ProductList[]>([]);
+  sizes = signal<SizeList[]>([]);
   imageBaseUrl = signal('http://localhost:5000/');
   permissionModule: string = 'PRODUCT_LIST';
   columns: TableColumn[] = [
-    { key: 'imagePaths', label: 'Picture' },
-    { key: 'name', label: 'Name', sortable: true },
-    { key: 'title', label: 'Title', sortable: true },
-    { key: 'price', label: 'Price' },
-    { key: 'shortDetails', label: 'Description' },
-    { key: 'discount', label: 'Discount' },
+    { key: 'name', label: 'Size', sortable: true },
     { key: 'isActive', label: 'Active', sortable: true },
+    { key: 'createdOn', label: 'Created On', sortable: true },
   ];
 
   ngOnInit() {
-    this.getProducts();
+    this.getSizes();
   }
-  getProducts() {
-    this.productService.getProducts().subscribe({
+  getSizes() {
+    this.sizeService.getSizes().subscribe({
       next: (res) => {
         if (res.success) {
-          this.products.set(res.data || []);
+          this.sizes.set(res.data || []);
         } else {
-          this.products.set([]);
+          this.sizes.set([]);
           this.alert.error(res.message);
         }
       },
@@ -58,48 +55,48 @@ export class Products {
     });
   }
 
-  openCreateProduct() {
-    const modalRef = this.modalService.open(CreateProduct, {
+  openCreateSize() {
+    const modalRef = this.modalService.open(CreateSize, {
       size: 'lg',
       backdrop: 'static',
     });
 
     modalRef.result.then((result) => {
       if (result) {
-        this.getProducts();
+        this.getSizes();
       }
     });
   }
 
-  onEdit(product: any) {
-    const modalRef = this.modalService.open(EditProduct, {
+  onEdit(size: any) {
+    const modalRef = this.modalService.open(EditSize, {
       size: 'lg',
       backdrop: 'static',
     });
-    modalRef.componentInstance.productId = product._id;
+    modalRef.componentInstance.sizeId = size._id;
     modalRef.result.then((result) => {
       if (result) {
-        this.getProducts();
+        this.getSizes();
       }
     });
   }
 
-  async onDelete(product: any) {
+  async onDelete(size: any) {
     const confirmed = await this.confirmService.confirm({
-      title: 'Delete Product',
+      title: 'Delete Size',
       message: 'Are you sure?',
       confirmText: 'Delete',
       confirmColor: '#f36716',
     });
 
     if (confirmed) {
-      this.productService.deleteProduct(product._id).subscribe({
+      this.sizeService.deleteSize(size._id).subscribe({
         next: (res) => {
           if (res.success) {
             this.toast.success(res.message);
-            this.getProducts();
+            this.getSizes();
           } else {
-            this.products.set([]);
+            this.sizes.set([]);
             this.alert.error(res.message);
           }
         },
@@ -110,15 +107,15 @@ export class Products {
     }
   }
 
-  onView(product: any) {
-    const modalRef = this.modalService.open(ViewProduct, {
+  onView(size: any) {
+    const modalRef = this.modalService.open(ViewSize, {
       size: 'lg',
       backdrop: 'static',
     });
-    modalRef.componentInstance.productId = product._id;
+    modalRef.componentInstance.sizeId = size._id;
     modalRef.result.then((result) => {
       if (result) {
-        this.getProducts();
+        this.getSizes();
       }
     });
   }
