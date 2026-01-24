@@ -31,6 +31,7 @@ export class Color {
   permissionModule: string = 'PRODUCT_LIST';
   columns: TableColumn[] = [
     { key: 'name', label: 'Color Name', sortable: true },
+    { key: 'color', label: 'Color Code', sortable: true },
     { key: 'code', label: 'Code', sortable: true },
     { key: 'isActive', label: 'Active', sortable: true },
     { key: 'createdOn', label: 'Created On', sortable: true },

@@ -8,7 +8,7 @@ import { SizeInfo } from '../../../models/size.model';
 
 @Component({
   selector: 'app-view-size',
-  imports: [AppModal, CommonModule,],
+  imports: [AppModal, CommonModule],
   templateUrl: './view-size.html',
   styleUrl: './view-size.css',
 })

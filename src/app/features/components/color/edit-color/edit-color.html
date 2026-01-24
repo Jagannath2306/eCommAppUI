@@ -21,36 +21,64 @@
           <div class="text-danger small">
             @if (f['name']?.errors?.['required']) {
               <span>Name is required.</span>
-            }@if (f['name']?.errors?.['minlength']) {
-            <span>Minimum 1 characters needed.</span>
-          }
+            }
+            @if (f['name']?.errors?.['minlength']) {
+              <span>Minimum 1 characters needed.</span>
+            }
           </div>
         }
       </div>
-       <div class="col-md-6 mb-3">
-      <label class="form-label text-primary">Color Code <span class="text-danger">*</span></label>
-      <input
-        type="text"
-        formControlName="code"
-        class="form-control"
-        [ngClass]="{
-          'is-invalid': (f['code'].touched || submitted) && f['code'].invalid,
-        }"
-      />
-      @if ((f['code']?.touched || submitted) && f['code']?.errors) {
-        <div class="text-danger small">
-          @if (f['code']?.errors?.['required']) {
-            <span>Code is required.</span>
-          }
-          @if (f['code']?.errors?.['minlength']) {
-            <span>Minimum 7 characters needed.</span>
-          }
-          @if (f['code']?.errors?.['pattern']) {
-            <span>Invalid color code format.</span>
-          }
-        </div>
-      }
-    </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label text-primary">Color Code <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          formControlName="color"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': (f['color'].touched || submitted) && f['color'].invalid,
+          }"
+        />
+        @if ((f['color']?.touched || submitted) && f['color']?.errors) {
+          <div class="text-danger small">
+            @if (f['color']?.errors?.['required']) {
+              <span>color code is required.</span>
+            }
+            @if (f['color']?.errors?.['minlength']) {
+              <span>Minimum 7 characters needed.</span>
+            }
+            @if (f['color']?.errors?.['pattern']) {
+              <span>Invalid color format.</span>
+            }
+          </div>
+        }
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label text-primary">Code (SKU)<span class="text-danger">*</span></label>
+        <input
+          type="text"
+          formControlName="code"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': (f['code'].touched || submitted) && f['code'].invalid,
+          }"
+        />
+        @if ((f['code']?.touched || submitted) && f['code']?.errors) {
+          <div class="text-danger small">
+            @if (f['code']?.errors?.['required']) {
+              <span>Code is required.</span>
+            }
+            @if (f['code']?.errors?.['minlength']) {
+              <span>Minimum 2 characters needed.</span>
+            }
+            @if (f['code']?.errors?.['maxlength']) {
+              <span>Maximum 4 characters only.</span>
+            }
+            @if (f['code']?.errors?.['pattern']) {
+              <span>Only uppercase letters and numbers are allowed.</span>
+            }
+          </div>
+        }
+      </div>
     </div>
   </form>
 </app-modal>

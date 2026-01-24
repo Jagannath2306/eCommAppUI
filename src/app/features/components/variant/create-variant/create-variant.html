@@ -1,0 +1,158 @@
+<app-modal
+  title="Create Variant"
+  confirmText="Create Variant"
+  mode="create"
+  [disableConfirm]="variantForm.invalid"
+  (confirm)="onSubmit()"
+>
+  <form autocomplete="off" [formGroup]="variantForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="mb-4">
+          <label for="products" class="form-label text-primary"
+            >Product<span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <select
+              class="form-select custom-select text-uppercase"
+              formControlName="productId"
+              id="products"
+              [ngClass]="{
+                'is-invalid': (f.productId.touched || submitted) && f.productId.invalid,
+              }"
+            >
+              <option value="" disabled selected>Select Product</option>
+              @for (product of productList(); track product._id) {
+                <option [value]="product._id" class="text-uppercase">{{ product.name }}</option>
+              } @empty {
+                <option disabled>No product found</option>
+              }
+            </select>
+            @if ((f.productId.touched || submitted) && f.productId.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.productId.errors['required']) {
+                  Product is required
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3">
+        <div class="mb-4">
+          <label for="colors" class="form-label text-primary"
+            >Color<span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <select
+              class="form-select custom-select text-uppercase"
+              formControlName="colorId"
+              id="colors"
+              [ngClass]="{
+                'is-invalid': (f.colorId.touched || submitted) && f.colorId.invalid,
+              }"
+            >
+              <option value="" disabled selected>Select Color</option>
+              @for (color of colorList(); track color._id) {
+                <option [value]="color._id" class="text-uppercase">{{ color.name }}</option>
+              } @empty {
+                <option disabled>No color found</option>
+              }
+            </select>
+            @if ((f.colorId.touched || submitted) && f.colorId.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.colorId.errors['required']) {
+                  Color is required
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3">
+        <div class="mb-4">
+          <label for="sizes" class="form-label text-primary"
+            >Size<span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <select
+              class="form-select custom-select text-uppercase"
+              formControlName="sizeId"
+              id="sizes"
+              [ngClass]="{
+                'is-invalid': (f.sizeId.touched || submitted) && f.sizeId.invalid,
+              }"
+            >
+              <option value="" disabled selected>Select Size</option>
+              @for (sizes of sizeList(); track sizes._id) {
+                <option [value]="sizes._id" class="text-uppercase">{{ sizes.name }}</option>
+              } @empty {
+                <option disabled>No size found</option>
+              }
+            </select>
+            @if ((f.sizeId.touched || submitted) && f.sizeId.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.sizeId.errors['required']) {
+                  Size is required
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="mb-2">
+          <label for="price" class="form-label text-primary"
+            >Price <span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <input
+              type="number"
+              class="form-control"
+              id="price"
+              required
+              formControlName="price"
+              [ngClass]="{
+                'is-invalid': (f.price.touched || submitted) && f.price.invalid,
+              }"
+            />
+            @if ((f.price.touched || submitted) && f.price.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.price.errors['required']) {
+                  Price is required
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="mb-2">
+          <label for="stock" class="form-label text-primary"
+            >Stock<span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <input
+              type="number"
+              class="form-control"
+              id="stock"
+              required
+              formControlName="stock"
+              [ngClass]="{
+                'is-invalid': (f.stock.touched || submitted) && f.stock.invalid,
+              }"
+            />
+            @if ((f.stock.touched || submitted) && f.stock.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.stock.errors['required']) {
+                  Stock is required
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-modal>

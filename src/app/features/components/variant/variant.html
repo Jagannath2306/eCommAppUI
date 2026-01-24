@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-12 d-flex justify-content-between p-2">
+    <h3 class="m-0">Variant Setup</h3>
+    <button
+      *hasPermission="['PRODUCT_LIST', 'create']"
+      class="btn btn-primary"
+      (click)="openCreateVariant()"
+    >
+      Create Variant
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 p-2">
+    <app-data-table
+      [columns]="columns"
+      [data]="variants()"
+      [permissionModule]="permissionModule"
+      [imageBaseUrl]="imageBaseUrl"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)"
+      (view)="onView($event)"
+    >
+    </app-data-table>
+  </div>
+</div>

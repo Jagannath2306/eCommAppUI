@@ -3,16 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { ToastService } from '../../shared/services/toast.service';
-import { ColorResponse } from '../models/color.model';
+import { StatusResponse } from '../models/status.model';
 
 @Injectable({ providedIn: 'root' })
-export class ColorService {
+export class StatusService {
   private http = inject(HttpClient);
   private toast = inject(ToastService);
   private baseUrl = environment.apiBaseUrl;
 
-  getColors() {
-    return this.http.get<ColorResponse>(`${this.baseUrl}/Color/GetColorList`, {}).pipe(
+  getStatus() {
+    return this.http.get<StatusResponse>(`${this.baseUrl}/ProductStatusMaster/GetStatusList`, {}).pipe(
       tap((response) => {
         if (response.success && response.data) {
         } else {
@@ -22,9 +22,9 @@ export class ColorService {
     );
   }
 
-  deleteColor(id: string) {
+  deleteStatus(id: string) {
     return this.http
-      .put<ColorResponse>(`${this.baseUrl}/Color/Delete`, {
+      .put<StatusResponse>(`${this.baseUrl}/ProductStatusMaster/Delete`, {
         id,
       })
       .pipe(
@@ -36,13 +36,9 @@ export class ColorService {
         }),
       );
   }
-  saveColor(color: any) {
+  saveStatus(status: any) {
     return this.http
-      .post<ColorResponse>(`${this.baseUrl}/Color/Save`, {
-        name: color.name,
-        code: color.code,
-        color: color.color,
-      })
+      .post<StatusResponse>(`${this.baseUrl}/ProductStatusMaster/Save`, status)
       .pipe(
         tap((response) => {
           if (response.success && response.data) {
@@ -52,8 +48,8 @@ export class ColorService {
         }),
       );
   }
-  updateColor(color: any) {
-    return this.http.post<ColorResponse>(`${this.baseUrl}/Color/Update`, color).pipe(
+  updateStatus(status: any) {
+    return this.http.post<StatusResponse>(`${this.baseUrl}/ProductStatusMaster/Update`, status).pipe(
       tap((response) => {
         if (response.success && response.data) {
         } else {
@@ -63,8 +59,8 @@ export class ColorService {
     );
   }
 
-  getColorById(colorId: any) {
-    return this.http.post<ColorResponse>(`${this.baseUrl}/Color/GetById`, { id: colorId }).pipe(
+  getStatusById(colorId: any) {
+    return this.http.post<StatusResponse>(`${this.baseUrl}/ProductStatusMaster/GetById`, { id: colorId }).pipe(
       tap((response) => {
         if (response.success && response.data) {
         } else {

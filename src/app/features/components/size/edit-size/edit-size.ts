@@ -40,6 +40,7 @@ export class EditSize {
   initForm() {
     this.sizeForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(1)]],
+      code: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(4),Validators.pattern(/^[A-Z0-9]+$/)]]
     });
   }
 
@@ -68,6 +69,7 @@ export class EditSize {
     const formData = {
       id: this.sizeId,
       name: this.sizeForm.value.name,
+      code: this.sizeForm.value.code,
     };
     this.sizeService.updateSize(formData).subscribe({
       next: (res: any) => {

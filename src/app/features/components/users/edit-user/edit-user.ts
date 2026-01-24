@@ -2,7 +2,6 @@ import { Component, inject, Input, signal } from '@angular/core';
 import { AppModal } from '../../../../shared/components/app-modal/app-modal/app-modal';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../../../core/services/auth/auth.service';
 import { AlertService } from '../../../../shared/services/alert.service';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { UserService } from '../../../services/user.service';

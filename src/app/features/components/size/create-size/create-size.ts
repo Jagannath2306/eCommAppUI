@@ -33,6 +33,7 @@ export class CreateSize {
   ngOnInit(): void {
     this.sizeForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(1)]],
+      code: ['', [Validators.required, Validators.minLength(2),Validators.maxLength(4),Validators.pattern(/^[A-Z0-9]+$/)]]
     });
   }
   onSubmit(): void {

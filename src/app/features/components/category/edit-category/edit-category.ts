@@ -39,8 +39,9 @@ export class EditCategory {
 
   initForm() {
     this.categoryForm = this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
       title: ['', [Validators.required]],
+      code: ['', [Validators.required, Validators.minLength(2),Validators.maxLength(4),Validators.pattern(/^[A-Z0-9]+$/)]],
     });
   }
 
@@ -90,6 +91,7 @@ export class EditCategory {
     formData.append('id', this.categoryId);
     formData.append('name', this.categoryForm.value.name);
     formData.append('title', this.categoryForm.value.title);
+    formData.append('code', this.categoryForm.value.code);
 
     if (this.selectedFile) {
       formData.append('imagePath', this.selectedFile);

@@ -6,7 +6,7 @@
   (confirm)="onSubmit()"
 >
   <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="row g-3">
-    <div class="col-md-6 mb-3">
+    <div class="col-md-12 mb-3">
       <label class="form-label text-primary"
         >Category Name <span class="text-danger">*</span></label
       >
@@ -47,6 +47,33 @@
           }
           @if (f['title']?.errors?.['minlength']) {
             <span>Minimum 3 characters needed.</span>
+          }
+        </div>
+      }
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label text-primary">Code<span class="text-danger">*</span></label>
+      <input
+        type="text"
+        formControlName="code"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': (f['code'].touched || submitted) && f['code'].invalid,
+        }"
+      />
+      @if ((f['code']?.touched || submitted) && f['code']?.errors) {
+        <div class="text-danger small">
+          @if (f['code']?.errors?.['required']) {
+            <span>Code is required.</span>
+          }
+          @if (f['code']?.errors?.['minlength']) {
+            <span>Minimum 2 characters needed.</span>
+          }
+          @if (f['code']?.errors?.['maxlength']) {
+            <span>Maximum 4 characters only.</span>
+          }
+          @if (f['code']?.errors?.['pattern']) {
+           <span>Only uppercase letters and numbers are allowed.</span>
           }
         </div>
       }

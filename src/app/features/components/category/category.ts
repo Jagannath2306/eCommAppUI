@@ -33,6 +33,7 @@ export class Category {
   columns: TableColumn[] = [
     { key: 'imagePath', label: 'Picture' },
     { key: 'name', label: 'Name', sortable: true },
+    { key: 'code', label: 'Code', sortable: false },
     { key: 'title', label: 'Title', sortable: true },
     { key: 'slug', label: 'Slug', sortable: false },
     { key: 'isActive', label: 'Active', sortable: true },

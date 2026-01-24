@@ -32,6 +32,7 @@ export class Size {
   permissionModule: string = 'PRODUCT_LIST';
   columns: TableColumn[] = [
     { key: 'name', label: 'Size', sortable: true },
+    { key: 'code', label: 'code', sortable: true },
     { key: 'isActive', label: 'Active', sortable: true },
     { key: 'createdOn', label: 'Created On', sortable: true },
   ];

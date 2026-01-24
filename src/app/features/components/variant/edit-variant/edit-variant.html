@@ -1,0 +1,64 @@
+<app-modal
+  title="Edit Variant"
+  confirmText="Update Variant"
+  mode="edit"
+  [disableConfirm]="variantForm.invalid"
+  (confirm)="onSubmit()"
+>
+  <form autocomplete="off" [formGroup]="variantForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="mb-2">
+          <label for="price" class="form-label text-primary"
+            >Price <span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <input
+              type="number"
+              class="form-control"
+              id="price"
+              required
+              formControlName="price"
+              [ngClass]="{
+                'is-invalid': (f.price.touched || submitted) && f.price.invalid,
+              }"
+            />
+            @if ((f.price.touched || submitted) && f.price.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.price.errors['required']) {
+                  Price is required
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 col-md-6">
+        <div class="mb-2">
+          <label for="stock" class="form-label text-primary"
+            >Stock<span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <input
+              type="number"
+              class="form-control"
+              id="stock"
+              required
+              formControlName="stock"
+              [ngClass]="{
+                'is-invalid': (f.stock.touched || submitted) && f.stock.invalid,
+              }"
+            />
+            @if ((f.stock.touched || submitted) && f.stock.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.stock.errors['required']) {
+                  Stock is required
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-modal>

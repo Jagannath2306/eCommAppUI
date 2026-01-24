@@ -32,6 +32,7 @@ export class CreateCategory {
     this.categoryForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       title: ['', [Validators.required]],
+      code: ['', [Validators.required, Validators.minLength(2),Validators.maxLength(4),Validators.pattern(/^[A-Z0-9]+$/)]]
     });
   }
   get f() {
@@ -66,6 +67,7 @@ export class CreateCategory {
     const formData = new FormData();
     formData.append('name', this.categoryForm.value.name);
     formData.append('title', this.categoryForm.value.title);
+    formData.append('code', this.categoryForm.value.code);
     if (this.selectedFile) {
       formData.append('imagePath', this.selectedFile);
     }

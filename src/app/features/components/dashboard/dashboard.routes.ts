@@ -8,6 +8,8 @@ import { Category } from '../category/category';
 import { Size } from '../size/size';
 import { Tag } from '../tag/tag';
 import { Color } from '../color/color';
+import { Variant } from '../variant/variant';
+import { Status } from '../status/status';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -50,5 +52,13 @@ export const DASHBOARD_ROUTES: Routes = [
   {
     path: 'colors',
     component: Color,
+  },
+  {
+    path: 'variant',
+    component: Variant,
+  },
+  {
+    path: 'status',
+    component: Status,
   },
 ];

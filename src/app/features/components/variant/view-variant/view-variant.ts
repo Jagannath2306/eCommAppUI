@@ -2,34 +2,33 @@ import { Component, inject, Input, signal } from '@angular/core';
 import { AppModal } from '../../../../shared/components/app-modal/app-modal/app-modal';
 import { CommonModule } from '@angular/common';
 import { AlertService } from '../../../../shared/services/alert.service';
-import { CategoryService } from '../../../services/category.service';
+import { VariantService } from '../../../services/variant.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryInfo } from '../../../models/category.model';
+import { VariantInfo } from '../../../models/variant.model';
 
 @Component({
-  selector: 'app-view-category',
-  imports: [AppModal, CommonModule,],
-  templateUrl: './view-category.html',
-  styleUrl: './view-category.css',
+  selector: 'app-view-variant',
+  imports: [AppModal, CommonModule],
+  templateUrl: './view-variant.html',
+  styleUrl: './view-variant.css',
 })
-export class ViewCategory {
+export class ViewVariant {
   private alert = inject(AlertService);
-  private categoryService = inject(CategoryService);
+  private variantService = inject(VariantService);
   public activeModal = inject(NgbActiveModal);
 
-  @Input() categoryId!: string;
+  @Input() variantId!: string;
 
-  // Signal to hold category data
-  category = signal<CategoryInfo | any>(null);
+  variant = signal<any>(null);
   selectedImage = signal<string | null>(null);
   baseURL = 'http://localhost:5000/'; // Match your backend port
 
   ngOnInit() {
-    this.getCategory();
+    this.getVariants();
   }
 
-  getCategory() {
-    this.categoryService.getCategoryById(this.categoryId).subscribe({
+  getVariants() {
+    this.variantService.getVariantById(this.variantId).subscribe({
       next: (res) => {
         if (res.success && res.data) {
           const data: any = res.data;
@@ -41,19 +40,19 @@ export class ViewCategory {
             updatedOnFormatted: this.formatDateTime(data.updatedOn),
           };
 
-          this.category.set(formattedData);
+          this.variant.set(formattedData);
 
           // Set initial large image
           if (data.imagePaths && data.imagePaths.length > 0) {
             this.selectedImage.set(data.imagePaths[0]);
           }
         } else {
-          this.category.set(null);
+          this.variant.set(null);
           this.alert.error(res.message);
         }
       },
       error: (err) => {
-        this.category.set(null);
+        this.variant.set(null);
         this.alert.error(err.error?.message || 'Server Error');
       },
     });
