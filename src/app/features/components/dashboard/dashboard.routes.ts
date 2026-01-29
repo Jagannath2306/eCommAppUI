@@ -10,6 +10,7 @@ import { Tag } from '../tag/tag';
 import { Color } from '../color/color';
 import { Variant } from '../variant/variant';
 import { Status } from '../status/status';
+import { VariantStatus } from '../variant-status/variant-status';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -60,5 +61,9 @@ export const DASHBOARD_ROUTES: Routes = [
   {
     path: 'status',
     component: Status,
+  },
+  {
+    path: 'variant-status',
+    component: VariantStatus,
   },
 ];

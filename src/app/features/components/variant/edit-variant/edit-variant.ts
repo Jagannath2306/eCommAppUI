@@ -6,7 +6,8 @@ import { AlertService } from '../../../../shared/services/alert.service';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { VariantService } from '../../../services/variant.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { VariantInfo, VariantList } from '../../../models/variant.model';
+import { VariantInfo } from '../../../models/variant.model';
+import { VariantList } from '../../../models/variantStatus.model';
 
 @Component({
   selector: 'app-edit-variant',
@@ -24,10 +25,11 @@ export class EditVariant {
 
   @Input() variantId!: string;
   user = signal<VariantInfo | null>(null);
-
+  statusList = signal<VariantList[]>([]);
   variantForm = this.fb.group({
     price: ['', [Validators.required]],
     stock: ['', [Validators.required]],
+    statusId: ['', [Validators.required]],
   });
 
   get f() {
@@ -35,6 +37,7 @@ export class EditVariant {
   }
 
   ngOnInit() {
+    this.getVariantStatus()
     this.getVariants();
   }
   getVariants() {
@@ -53,11 +56,27 @@ export class EditVariant {
       },
     });
   }
+  getVariantStatus() {
+    this.variantService.getStatusList().subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.statusList.set(res.data || []);
+        } else {
+          this.statusList.set([]);
+          this.alert.error(res.message);
+        }
+      },
+      error: (err) => {
+        this.alert.error(err.error.message);
+      },
+    });
+  }
 
   patchForm(variant: any) {
     this.variantForm.patchValue({
       price: variant.price,
       stock: variant.stock,
+      statusId: variant.statusId,
     });
   }
 
@@ -71,6 +90,7 @@ export class EditVariant {
       id: this.variantId,
       price: this.variantForm.value.price,
       stock: this.variantForm.value.stock,
+      statusId: this.variantForm.value.statusId,
     };
 
     this.variantService.updateVariant(data).subscribe({

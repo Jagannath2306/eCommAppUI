@@ -1,0 +1,154 @@
+<app-modal
+  title="Edit Status"
+  confirmText="Update Status"
+  mode="edit"
+  [disableConfirm]="statusForm.invalid"
+  (confirm)="onSubmit()"
+>
+ <form [formGroup]="statusForm" (ngSubmit)="onSubmit()" class="row g-3">
+    <div class="col-md-6 mb-3">
+      <label class="form-label text-primary">Status Name <span class="text-danger">*</span></label>
+      <input
+        type="text"
+        formControlName="name"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': (f['name'].touched || submitted) && f['name'].invalid,
+        }"
+      />
+      @if ((f['name']?.touched || submitted) && f['name']?.errors) {
+        <div class="text-danger small">
+          @if (f['name']?.errors?.['required']) {
+            <span>Name is required.</span>
+          }
+          @if (f['name']?.errors?.['minlength']) {
+            <span>Minimum 1 characters needed.</span>
+          }
+        </div>
+      }
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label text-primary">Code<span class="text-danger">*</span></label>
+      <input
+        type="text"
+        formControlName="code"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': (f['code'].touched || submitted) && f['code'].invalid,
+        }"
+      />
+      @if ((f['code']?.touched || submitted) && f['code']?.errors) {
+        <div class="text-danger small">
+          @if (f['code']?.errors?.['required']) {
+            <span>Code is required.</span>
+          }
+        </div>
+      }
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label text-primary">Color Code<span class="text-danger">*</span></label>
+      <input
+        type="text"
+        formControlName="color"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': (f['color'].touched || submitted) && f['color'].invalid,
+        }"
+      />
+      @if ((f['color']?.touched || submitted) && f['color']?.errors) {
+        <div class="text-danger small">
+          @if (f['color']?.errors?.['required']) {
+            <span>color Code is required.</span>
+          }
+          @if (f['color']?.errors?.['minlength']) {
+            <span>Minimum 7 characters needed.</span>
+          }
+          @if (f['color']?.errors?.['pattern']) {
+            <span>Invalid color code format.</span>
+          }
+        </div>
+      }
+    </div>
+    <div class="col-12 col-lg-6 col-md-6">
+      <div class="mb-4">
+        <label for="types" class="form-label text-primary"
+          >Selectable<span class="text-danger">*</span></label
+        >
+        <div class="input-group">
+          <select
+            class="form-select custom-select text-uppercase"
+            formControlName="isSelectable"
+            id="types"
+            [ngClass]="{
+              'is-invalid':
+                (f['isSelectable'].touched || submitted) && f['isSelectable'].invalid,
+            }"
+          >
+            <option value="" disabled selected>Select</option>
+            @for (visible of visibleList(); track visible.name) {
+              <option [value]="visible.value" class="text-uppercase">{{ visible.name }}</option>
+            } @empty {
+              <option disabled>No Visible found</option>
+            }
+          </select>
+          @if ((f['isSelectable'].touched || submitted) && f['isSelectable'].errors) {
+            <div class="invalid-feedback d-block">
+              @if (f['isSelectable'].errors['required']) {
+                Selectable is required
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6 col-md-6">
+      <div class="mb-4">
+        <label for="types" class="form-label text-primary"
+          >Sellable <span class="text-danger">*</span></label
+        >
+        <div class="input-group">
+          <select
+            class="form-select custom-select text-uppercase"
+            formControlName="isSellable"
+            id="types"
+            [ngClass]="{
+              'is-invalid': (f['isSellable'].touched || submitted) && f['isSellable'].invalid,
+            }"
+          >
+            <option value="" disabled selected>Select</option>
+            @for (visible of visibleList(); track visible.name) {
+              <option [value]="visible.value" class="text-uppercase">{{ visible.name }}</option>
+            } @empty {
+              <option disabled>No Sellable found</option>
+            }
+          </select>
+          @if ((f['isSellable'].touched || submitted) && f['isSellable'].errors) {
+            <div class="invalid-feedback d-block">
+              @if (f['isSellable'].errors['required']) {
+                Sellable is required
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label text-primary">Description<span class="text-danger">*</span></label>
+      <input
+        type="text"
+        formControlName="description"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': (f['description'].touched || submitted) && f['description'].invalid,
+        }"
+      />
+      @if ((f['description']?.touched || submitted) && f['description']?.errors) {
+        <div class="text-danger small">
+          @if (f['description']?.errors?.['required']) {
+            <span>Description is required.</span>
+          }
+        </div>
+      }
+    </div>
+  </form>
+</app-modal>

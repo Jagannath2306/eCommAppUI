@@ -96,6 +96,14 @@
               <p class="mb-0 small text-secondary">{{ v.updatedOn | date: 'mediumDate' }}</p>
             </div>
           </div>
+          <div class="row">
+            <div class="col-12">
+               <p class="text-primary mt-2 fw-bold">Status : {{ v.statusName }}</p>
+            <p class="text-muted mt-2 border-start border-4 ps-3 py-1 m-0 bg-light rounded-end">
+             {{ v.statusDesc || 'No description provided for this status.' }}
+          </p>
+            </div>
+          </div>
         </div>
 
         <hr class="my-4" />

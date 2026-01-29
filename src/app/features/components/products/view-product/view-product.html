@@ -61,6 +61,11 @@
               }
             </div>
           </div>
+           <p class="text-primary mt-2 fw-bold">Status : {{ p.statusId.name }}</p>
+            <p class="text-muted mt-2 border-start border-4 ps-3 py-1 m-0 bg-light rounded-end">
+             {{ p.statusId.description || 'No description provided for this status.' }}
+          </p>
+
         </div>
         <div class="col-12">
           <div class="p-3 bg-white">

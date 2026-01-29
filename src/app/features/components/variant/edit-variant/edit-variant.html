@@ -59,6 +59,37 @@
           </div>
         </div>
       </div>
+        <div class="col-12 col-lg-6 col-md-6">
+        <div class="mb-4">
+          <label for="status" class="form-label text-primary"
+            >Status<span class="text-danger">*</span></label
+          >
+          <div class="input-group">
+            <select
+              class="form-select custom-select text-uppercase"
+              formControlName="statusId"
+              id="status"
+              [ngClass]="{
+                'is-invalid': (f.statusId.touched || submitted) && f.statusId.invalid,
+              }"
+            >
+              <option value="" disabled selected>Select Status</option>
+              @for (status of statusList(); track status._id) {
+                <option [value]="status._id" class="text-uppercase">{{ status.name }}</option>
+              } @empty {
+                <option disabled>No Status found</option>
+              }
+            </select>
+            @if ((f.statusId.touched || submitted) && f.statusId.errors) {
+              <div class="invalid-feedback d-block">
+                @if (f.statusId.errors['required']) {
+                  Status is required
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
     </div>
   </form>
 </app-modal>

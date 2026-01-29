@@ -32,6 +32,7 @@ export class EditProduct {
 
   categories: any[] = [];
   tags: any[] = [];
+  status: any[] = [];
   selectedFiles: File[] = [];
   previews: string[] = [];
   existingImages: string[] = [];
@@ -42,6 +43,7 @@ export class EditProduct {
   ngOnInit(): void {
     this.getTags();
     this.getCategories();
+    this.getStatus()
     this.initForm();
 
     if (this.productId) {
@@ -59,6 +61,7 @@ export class EditProduct {
       salePrice: [null, [Validators.required, Validators.min(1)]],
       categoryIds: [[], Validators.required],
       tagIds: [[], Validators.required],
+      statusId: [[], Validators.required],
       shortDetails: ['', [Validators.required, Validators.minLength(5)]],
       description: ['', [Validators.required, Validators.minLength(5)]],
       imagePaths: [null], // Handled via selectedFiles logic
@@ -70,6 +73,21 @@ export class EditProduct {
       next: (res: any) => {
         if (res.success) {
           this.tags = res.data;
+          this.cdr.detectChanges();
+        } else {
+          this.alert.error(res.message);
+        }
+      },
+      error: (err: any) => {
+        console.error(err);
+      },
+    });
+  }
+  getStatus() {
+    this.productService.getStatus().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.status = res.data;
           this.cdr.detectChanges();
         } else {
           this.alert.error(res.message);

@@ -54,6 +54,16 @@ export class VariantService {
       }),
     );
   }
+  getStatusList() {
+    return this.http.get<VariantResponse>(`${this.baseUrl}/VariantStatusMaster/GetVariantStatusList`, {}).pipe(
+      tap((response) => {
+        if (response.success && response.data) {
+        } else {
+          console.error(response.message);
+        }
+      }),
+    );
+  }
 
   deleteVariant(id: string) {
     return this.http

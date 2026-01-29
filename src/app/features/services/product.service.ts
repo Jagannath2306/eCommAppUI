@@ -4,6 +4,7 @@ import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { ToastService } from '../../shared/services/toast.service';
 import { CategoryResponse, Product, ProductDeleteResponse, ProductResponse, TagsResponse } from '../models/product.modal';
+import { StatusResponse } from '../models/status.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -33,6 +34,16 @@ export class ProductService {
   }
   getTags() {
     return this.http.get<TagsResponse>(`${this.baseUrl}/Tag/GetTags`, {}).pipe(
+      tap((response) => {
+        if (response.success && response.data) {
+        } else {
+          console.error(response.message);
+        }
+      }),
+    );
+  }
+  getStatus() {
+    return this.http.get<StatusResponse>(`${this.baseUrl}/ProductStatusMaster/GetStatusList`, {}).pipe(
       tap((response) => {
         if (response.success && response.data) {
         } else {

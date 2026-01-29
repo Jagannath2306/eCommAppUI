@@ -25,6 +25,7 @@ export class CreateProduct {
   isSubmitting = false;
   categories = [];
   tags = [];
+  status = [];
 
   constructor(
     private fb: FormBuilder,
@@ -43,10 +44,12 @@ export class CreateProduct {
       description: ['', [Validators.required, Validators.minLength(10)]],
       categoryIds: [[], Validators.required],
       tagIds: [[], Validators.required],
+      statusId: [[], Validators.required],
       imagePaths: [null, Validators.required],
     });
     this.getTags();
     this.getCategories();
+    this.getStatus();
   }
  get f() {
     return this.productForm.controls;
@@ -61,6 +64,21 @@ export class CreateProduct {
       next: (res: any) => {
         if (res.success) {
           this.tags = res.data;
+          this.cdr.detectChanges();
+        } else {
+          this.alert.error(res.message);
+        }
+      },
+      error: (err: any) => {
+        console.error(err);
+      },
+    });
+  }
+  getStatus() {
+    this.productService.getStatus().subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.status = res.data;
           this.cdr.detectChanges();
         } else {
           this.alert.error(res.message);

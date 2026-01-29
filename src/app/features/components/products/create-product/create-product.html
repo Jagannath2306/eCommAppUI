@@ -169,6 +169,28 @@
           </div>
         }
       </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label text-primary">Status <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="status"
+          bindLabel="name"
+          bindValue="_id"
+          [multiple]="false"
+          formControlName="statusId"
+          appendTo="body"
+          [ngClass]="{
+            'is-invalid': (f['statusId'].touched || isSubmitting) && f['statusId'].invalid,
+          }"
+        >
+        </ng-select>
+         @if ((f['statusId']?.touched || isSubmitting) && f['statusId']?.errors) {
+          <div class="text-danger small">
+            @if (f['statusId']?.errors?.['required']) {
+              <span>Status is required.</span>
+            }
+          </div>
+        }
+      </div>
 
       <div class="col-12 mb-3">
         <label class="form-label text-primary"
