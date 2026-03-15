@@ -11,6 +11,9 @@ import { Color } from '../color/color';
 import { Variant } from '../variant/variant';
 import { Status } from '../status/status';
 import { VariantStatus } from '../variant-status/variant-status';
+import { ViewOrders } from '../orders/view-orders/view-orders';
+import { OrderStatus } from '../orders/order-status/order-status';
+import { CancelOrder } from '../orders/cancel-order/cancel-order';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -65,5 +68,17 @@ export const DASHBOARD_ROUTES: Routes = [
   {
     path: 'variant-status',
     component: VariantStatus,
+  },
+  {
+    path: 'orders',
+    component: ViewOrders,
+  },
+  {
+    path: 'orders-status',
+    component: OrderStatus,
+  },
+  {
+    path: 'orders-cancel',
+    component: CancelOrder,
   },
 ];
