@@ -27,8 +27,10 @@
         >
           <i class="bi bi-eye"></i>
         </button>
-        <button *hasPermission="[permissionModule, 'delete']" class="btn btn-sm btn-outline-success me-2">
+        <button *hasPermission="[permissionModule, 'view']" class="btn btn-sm btn-outline-success me-2"
+         [routerLink]="['/orders/orders-track']">
           <i class="bi bi-diagram-3"></i>
+
         </button>
 
         <button *hasPermission="[permissionModule, 'delete']" class="btn btn-sm btn-outline-danger">

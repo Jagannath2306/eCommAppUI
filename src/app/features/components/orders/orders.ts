@@ -1,19 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
 import { ToastService } from '../../../shared/services/toast.service';
 import { OrderService } from '../../services/order.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AlertService } from '../../../shared/services/alert.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmService } from '../../../shared/services/confirm.service';
 import { OrderList } from '../../models/orders.modal';
 import { TableColumn } from '../../../shared/models/table-column.model';
-import { ViewOrder } from './view-order/order-details';
+import { ViewOrder } from './view-order/view-order';
 import { DataTable } from '../../../shared/components/data-table/data-table';
 import { UpdateOrder } from './update-order/update-order';
 import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
 @Component({
   selector: 'app-orders',
-  imports: [DataTable, HasPermissionDirective],
+  imports: [DataTable, HasPermissionDirective,RouterModule],
   templateUrl: './orders.html',
   styleUrl: './orders.css',
 })

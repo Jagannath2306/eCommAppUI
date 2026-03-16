@@ -109,33 +109,36 @@ export class UpdateOrder {
       },
     });
   }
-getStatusComment(id: any): string {
-  // 1. Find the status object from your Signal list using the ID
-  const statusObj = this.statusList().find(s => s._id === id);
-  
-  if (!statusObj) return '';
+  getStatusComment(id: any): string {
+    // 1. Find the status object from your Signal list using the ID
+    const statusObj = this.statusList().find((s) => s._id === id);
 
-  // 2. Map the name to your specific descriptions
-  const statusName = statusObj.name?.toUpperCase();
+    if (!statusObj) return '';
 
-  switch (statusName) {
-    case 'PLACED':
-      return 'Your order has been received.';
-    case 'CONFIRMED':
-      return 'Payment verified and order confirmed.';
-    case 'PACKED':
-      return 'Your order has been packed in the warehouse.';
-    case 'SHIPPED':
-      return 'Your order has been handed to a courier partner.';
-    case 'OUT FOR DELIVERY':
-      return 'Delivery agent is on the way.';
-    case 'DELIVERED':
-      return 'Order successfully delivered.';
-    case 'CANCELED':
-    case 'CANCELLED':
-      return 'Your order has been cancelled.';
-    default:
-      return `Status: ${statusObj.name}`; // Fallback
+    // 2. Map the name to your specific descriptions
+    const statusName = statusObj.name?.toUpperCase();
+
+    switch (statusName) {
+      case 'PENDING':
+        return 'Your order has been placed.';
+      case 'CONFIRMED':
+        return 'Payment verified and order confirmed.';
+      case 'PACKED':
+        return 'Your order has been packed in the warehouse.';
+      case 'SHIPPED':
+        return 'Your order has been handed to a courier partner.';
+      case 'OUT_FOR_DELIVERY':
+        return 'Delivery agent is on the way.';
+      case 'DELIVERED':
+        return 'Order successfully delivered.';
+      case 'RETURNED':
+        return 'Your order has been returned.';
+      case 'REFUNDED':
+        return 'Your order has been refunded.';
+      case 'CANCELLED':
+        return 'Your order has been cancelled.';
+      default:
+        return `Status: ${statusObj.name}`; // Fallback
+    }
   }
-}
 }

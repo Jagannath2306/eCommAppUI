@@ -7,10 +7,10 @@ import { AppModal } from '../../../../shared/components/app-modal/app-modal/app-
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-order-details',
+  selector: 'app-view-order',
   imports: [AppModal, CommonModule],
-  templateUrl: './order-details.html',
-  styleUrl: './order-details.css',
+  templateUrl: './view-order.html',
+  styleUrl: './view-order.css',
 })
 export class ViewOrder {
 private alert = inject(AlertService);

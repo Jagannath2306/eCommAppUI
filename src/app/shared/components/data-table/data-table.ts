@@ -7,7 +7,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [CommonModule, HasPermissionDirective],
+  imports: [CommonModule],
   templateUrl: './data-table.html',
   styleUrl: './data-table.css',
 })
