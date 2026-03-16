@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CancelDetails } from './cancel-details';
+import { UpdateOrder } from './update-order';
 
-describe('CancelDetails', () => {
-  let component: CancelDetails;
-  let fixture: ComponentFixture<CancelDetails>;
+describe('UpdateOrder', () => {
+  let component: UpdateOrder;
+  let fixture: ComponentFixture<UpdateOrder>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CancelDetails]
+      imports: [UpdateOrder]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CancelDetails);
+    fixture = TestBed.createComponent(UpdateOrder);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -6,13 +6,13 @@ import { ToastService } from '../../shared/services/toast.service';
 import { OrderResponse } from '../models/orders.modal';
 
 @Injectable({ providedIn: 'root' })
-export class ColorService {
+export class OrderService {
   private http = inject(HttpClient);
   private toast = inject(ToastService);
   private baseUrl = environment.apiBaseUrl;
 
   getOrders() {
-    return this.http.get<OrderResponse>(`${this.baseUrl}/Order/GetOrdersList`, {}).pipe(
+    return this.http.get<OrderResponse>(`${this.baseUrl}/Order/GetOrdersList`).pipe(
       tap((response) => {
         if (response.success && response.data) {
         } else {
@@ -22,20 +22,6 @@ export class ColorService {
     );
   }
 
-  deleteColor(id: string) {
-    return this.http
-      .put<OrderResponse>(`${this.baseUrl}/Color/Delete`, {
-        id,
-      })
-      .pipe(
-        tap((response) => {
-          if (response.success && response.data) {
-          } else {
-            console.error(response.message);
-          }
-        }),
-      );
-  }
   createOrder(order: any) {
     return this.http
       .post<OrderResponse>(`${this.baseUrl}/Order/CreateOrder`, {
@@ -62,6 +48,26 @@ export class ColorService {
       }),
     );
   }
+  getStatusList() {
+    return this.http.get<OrderResponse>(`${this.baseUrl}/Order/getStatusList`).pipe(
+      tap((response) => {
+        if (response.success && response.data) {
+        } else {
+          console.error(response.message);
+        }
+      }),
+    );
+  }
+   updateOrderStatus(order: any) {
+      return this.http.post<OrderResponse>(`${this.baseUrl}/Order/UpdateOrderStatus`, order).pipe(
+        tap((response) => {
+          if (response.success && response.data) {
+          } else {
+            console.error(response.message);
+          }
+        }),
+      );
+    }
   cancelOrder(orderId: any) {
     return this.http.post<OrderResponse>(`${this.baseUrl}/Order/cancelOrder`, { id: orderId }).pipe(
       tap((response) => {

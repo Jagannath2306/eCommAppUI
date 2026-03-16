@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, Input, input, Output, Signal, signal } from '@angular/core';
+import { Component, computed, ContentChild, EventEmitter, inject, Input, input, Output, Signal, signal, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableColumn } from '../../models/table-column.model';
 import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
@@ -12,6 +12,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrl: './data-table.css',
 })
 export class DataTable {
+  @ContentChild('tableActions') actionTemplate!: TemplateRef<any>;
   private sanitizer = inject(DomSanitizer);
   columns = input<TableColumn[]>([]);
   @Input() imageBaseUrl!: Signal<string>;

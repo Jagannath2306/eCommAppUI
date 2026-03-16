@@ -17,6 +17,7 @@
         @if (showActions()) {
           <th class="px-2 text-white small">Actions</th>
         }
+          
       </tr>
     </thead>
     <tbody>
@@ -77,7 +78,7 @@
               }
             </td>
           }
-          @if (showActions()) {
+          <!-- @if (showActions()) {
             <td class="px-2 small width-fit-content">
               <button
                 *hasPermission="[permissionModule, 'edit']"
@@ -101,7 +102,14 @@
                 <i class="bi bi-eye"></i>
               </button>
             </td>
-          }
+          } -->
+             @if (showActions() && actionTemplate) {
+        <td>
+          <ng-container
+            *ngTemplateOutlet="actionTemplate; context: { $implicit: row }">
+          </ng-container>
+        </td>
+      }
         </tr>
       } @empty {
         <tr>

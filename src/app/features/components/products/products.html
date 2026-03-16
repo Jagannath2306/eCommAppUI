@@ -17,10 +17,31 @@
       [data]="products()"
       [permissionModule]="permissionModule"
       [imageBaseUrl]="imageBaseUrl"
-      (edit)="onEdit($event)"
-      (delete)="onDelete($event)"
-      (view)="onView($event)"
     >
+     <ng-template #tableActions let-row>
+        <button
+          *hasPermission="[permissionModule, 'edit']"
+          class="btn btn-sm btn-outline-primary me-2"
+          (click)="onEdit(row)"
+        >
+          <i class="bi bi-pencil"></i>
+        </button>
+
+        <button
+          *hasPermission="[permissionModule, 'view']"
+          class="btn btn-sm btn-outline-info me-2"
+          (click)="onView(row)"
+        >
+          <i class="bi bi-eye"></i>
+        </button>
+        <button
+          *hasPermission="[permissionModule, 'delete']"
+          class="btn btn-sm btn-outline-danger"
+          (click)="onDelete(row)"
+        >
+          <i class="bi bi-trash"></i>
+        </button>
+      </ng-template>
     </app-data-table>
   </div>
 </div>

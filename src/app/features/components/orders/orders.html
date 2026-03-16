@@ -1,24 +1,17 @@
 <div class="row">
   <div class="col-12 d-flex justify-content-between p-2">
-    <h3 class="m-0">Variant Status Setup</h3>
-    <button
-      *hasPermission="['VARIANT_STATUS_LIST', 'create']"
-      class="btn btn-primary"
-      (click)="openCreateStatus()"
-    >
-      Create  Status
-    </button>
+    <h3 class="m-0">Manage Orders</h3>
   </div>
 </div>
 <div class="row">
   <div class="col-12 p-2">
     <app-data-table
       [columns]="columns"
-      [data]="variant()"
+      [data]="orders()"
       [permissionModule]="permissionModule"
       [imageBaseUrl]="imageBaseUrl"
     >
-     <ng-template #tableActions let-row>
+      <ng-template #tableActions let-row>
         <button
           *hasPermission="[permissionModule, 'edit']"
           class="btn btn-sm btn-outline-primary me-2"
@@ -34,12 +27,12 @@
         >
           <i class="bi bi-eye"></i>
         </button>
-        <button
-          *hasPermission="[permissionModule, 'delete']"
-          class="btn btn-sm btn-outline-danger"
-          (click)="onDelete(row)"
-        >
-          <i class="bi bi-trash"></i>
+        <button *hasPermission="[permissionModule, 'delete']" class="btn btn-sm btn-outline-success me-2">
+          <i class="bi bi-diagram-3"></i>
+        </button>
+
+        <button *hasPermission="[permissionModule, 'delete']" class="btn btn-sm btn-outline-danger">
+          <i class="bi bi-x-circle"></i>
         </button>
       </ng-template>
     </app-data-table>

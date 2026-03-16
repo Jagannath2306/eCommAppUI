@@ -1,0 +1,43 @@
+<app-modal
+  title="Update Order Status"
+  confirmText="Update Status"
+  mode="edit"
+  [disableConfirm]="orderForm.invalid"
+  (confirm)="onSubmit()"
+>
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+     <div class="col-md-6 mb-3">
+        <label class="form-label text-primary">Order ID</label>
+        <input
+          type="text"
+          class="form-control bg-light disabled"
+          formControlName="_id"
+          [disabled]="true"
+        />
+   </div>
+   <div class="col-md-6 mb-3">
+        <label class="form-label text-primary">Select Status <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="statusList()"
+          bindLabel="name"
+          bindValue="_id"
+          formControlName="orderStatus"
+          appendTo="body"
+          [ngClass]="{
+            'is-invalid': (f['orderStatus']?.touched || submitted) && f['orderStatus'].invalid,
+          }"
+        >
+        
+        </ng-select>
+         @if ((f['orderStatus']?.touched || submitted) && f['orderStatus']?.errors) {
+          <div class="text-danger small">
+            @if (f['orderStatus']?.errors?.['required']) {
+              <span>Status is required.</span>
+            }
+          </div>
+        }
+      </div>
+  </div>
+  </form>
+</app-modal>

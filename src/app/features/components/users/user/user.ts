@@ -15,7 +15,7 @@ import { HasPermissionDirective } from '../../../../core/directives/has-permissi
 
 @Component({
   selector: 'app-user',
-  imports: [HasPermissionDirective,DataTable],
+  imports: [HasPermissionDirective,DataTable,HasPermissionDirective],
   templateUrl: './user.html',
   styleUrl: './user.css',
 })
