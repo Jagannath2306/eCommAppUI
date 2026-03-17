@@ -1,1 +1,79 @@
-<p>track-order works!</p>
+<app-modal title="Order Tracking" confirmText="Order" mode="view">
+  <div class="container py-1">
+    <div class="card border-0 shadow-sm overflow-hidden">
+      <!-- <div class="card-body bg-light border-bottom p-4">
+      <div class="row text-center position-relative">
+        <div class="position-absolute top-50 start-0 translate-middle-y bg-secondary-subtle" 
+             style="height: 2px; width: 100%; z-index: 0;"></div>
+        
+        @for (stage of ['PENDING', 'PACKED', 'SHIPPED', 'DELIVERED']; track stage) {
+          <div class="col position-relative" style="z-index: 1;">
+            <div [class]="'rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center ' + 
+                 (isStepComplete(stage) ? 'bg-primary text-white' : 'bg-white border text-muted')"
+                 style="width: 32px; height: 32px;">
+              @if (isStepComplete(stage)) { <i class="bi bi-check-lg"></i> }
+              @else { <small class="fw-bold">{{ $index + 1 }}</small> }
+            </div>
+            <div class="small fw-bold text-uppercase" style="font-size: 0.7rem;">
+              {{ stage.replace('_', ' ') }}
+            </div>
+          </div>
+        }
+      </div>
+    </div> -->
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+          <div class="row">
+            <div class="col-6">
+                 <h5 class="mb-0 fw-bold">Order Tracking</h5>
+          <small class="text-muted">Order ID: {{ orderTimeline()[0]?.orderId }}</small>
+            </div>
+            <div class="col-6 d-flex justify-content-end align-items-center">
+                 <button class="btn btn-outline-primary btn-sm">Download Invoice</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-4">
+        <!-- <h6 class="fw-bold mb-4">Detailed History</h6> -->
+        <div class="history-tree d-flex flex-column align-items-center">
+          @for (step of reversedHistory(); track step._id; let first = $first; let last = $last) {
+            <div class="d-flex w-100 justify-content-center" style="max-width: 500px">
+              <div class="d-flex flex-column align-items-center me-3">
+                <div
+                  [class]="'tree-dot ' + (first ? 'bg-primary shadow-sm' : 'bg-secondary-subtle')"
+                ></div>
+                @if (!last) {
+                  <div class="tree-line"></div>
+                }
+              </div>
+
+              <div class="pb-4 flex-grow-1">
+                <div [class]="'fw-bold mb-0 ' + (first ? 'text-primary' : 'text-dark')">
+                  {{ step.statusId.name.replace('_', ' ') }}
+                  @if (first) {
+                    <span class="badge bg-primary-subtle text-primary ms-2 small">Latest</span>
+                  }
+                </div>
+                <p class="text-muted small mb-1">{{ step.comment }}</p>
+                <div class="text-muted" style="font-size: 0.75rem">
+                  {{ step.createdOn | date: 'EEEE, MMM d' }} &bull;
+                  {{ step.createdOn | date: 'shortTime' }}
+                </div>
+
+                @if (step.createdBy && step.statusId.name !== 'PENDING') {
+                  <div class="mt-2 p-2 bg-light rounded-2 d-inline-block border">
+                    <small class="text-muted">
+                      <i class="bi bi-person-check-fill me-1"></i>
+                      Handled by: {{ step.createdBy.firstName }}
+                    </small>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</app-modal>

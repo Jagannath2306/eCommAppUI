@@ -11,6 +11,7 @@ import { ViewOrder } from './view-order/view-order';
 import { DataTable } from '../../../shared/components/data-table/data-table';
 import { UpdateOrder } from './update-order/update-order';
 import { HasPermissionDirective } from '../../../core/directives/has-permission.directive';
+import { TrackOrder } from './track-order/track-order';
 @Component({
   selector: 'app-orders',
   imports: [DataTable, HasPermissionDirective,RouterModule],
@@ -84,6 +85,18 @@ export class Orders {
 
   onView(order: any) {
     const modalRef = this.modalService.open(ViewOrder, {
+      size: 'xl',
+      backdrop: 'static',
+    });
+    modalRef.componentInstance.orderId = order._id;
+    modalRef.result.then((result) => {
+      if (result) {
+        this.getOrders();
+      }
+    });
+  }
+  onTrack(order: any) {
+    const modalRef = this.modalService.open(TrackOrder, {
       size: 'xl',
       backdrop: 'static',
     });

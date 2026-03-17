@@ -1,37 +1,23 @@
 <div class="row">
   <div class="col-12 d-flex justify-content-between p-2">
-    <h3 class="m-0">Manage Orders</h3>
+    <h3 class="m-0">Manage Payments</h3>
   </div>
 </div>
 <div class="row">
   <div class="col-12 p-2">
     <app-data-table
       [columns]="columns"
-      [data]="orders()"
+      [data]="payments()"
       [permissionModule]="permissionModule"
       [imageBaseUrl]="imageBaseUrl"
     >
       <ng-template #tableActions let-row>
-        <button
-          *hasPermission="[permissionModule, 'edit']"
-          class="btn btn-sm btn-outline-primary me-2"
-          (click)="onEdit(row)"
-        >
-          <i class="bi bi-pencil"></i>
-        </button>
-
         <button
           *hasPermission="[permissionModule, 'view']"
           class="btn btn-sm btn-outline-info me-2"
           (click)="onView(row)"
         >
           <i class="bi bi-eye"></i>
-        </button>
-        <button *hasPermission="[permissionModule, 'view']" class="btn btn-sm btn-outline-success me-2"
-         (click)="onTrack(row)"
-         >
-          <i class="bi bi-diagram-3"></i>
-
         </button>
 
       </ng-template>

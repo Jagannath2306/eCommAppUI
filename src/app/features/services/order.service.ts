@@ -78,4 +78,15 @@ export class OrderService {
       }),
     );
   }
+
+    getOrderStatusHistoryById(orderId: any) {
+    return this.http.post<OrderResponse>(`${this.baseUrl}/OrderStatusHistory/getOrderStatusHistoryById`, { id: orderId }).pipe(
+      tap((response) => {
+        if (response.success && response.data) {
+        } else {
+          console.error(response.message);
+        }
+      }),
+    );
+  }
 }

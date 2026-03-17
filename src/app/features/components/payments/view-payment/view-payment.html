@@ -1,0 +1,95 @@
+<app-modal [title]="'Payment Details: ' + (payment()?.transactionId || '')"confirmText="Order" mode="view">
+  <div class="modal-body p-0">
+    @if (payment(); as p) {
+      <div class="p-4 border-bottom bg-light d-flex justify-content-between align-items-center">
+        <div>
+          <h6 class="text-muted small text-uppercase fw-bold mb-1">Invoice Number</h6>
+          <h5 class="mb-0 fw-bold text-primary">{{ p.orderId.invoiceNo }}</h5>
+        </div>
+        <div [class]="'badge border bg-white px-3 py-2 fs-6 ' + getStatusColor(p.paymentStatusId.name)">
+          <i class="bi" [ngClass]="p.paymentStatusId.name === 'SUCCESS' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'"></i>
+          {{ p.paymentStatusId.name }}
+        </div>
+      </div>
+
+      <div class="p-4">
+        <div class="row g-4">
+          <div class="col-md-7">
+            <h6 class="fw-bold mb-3">Order Summary</h6>
+            <div class="border rounded-3 overflow-hidden">
+              <table class="table table-nowrap align-middle mb-0">
+                <thead class="bg-light">
+                  <tr class="small text-muted">
+                    <th class="ps-3">Item</th>
+                    <th class="text-center">Qty</th>
+                    <th class="text-end pe-3">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of p.orderId.items; track item.productId) {
+                    <tr>
+                      <td class="ps-3">
+                        <div class="fw-bold mb-0">{{ item.productName }}</div>
+                        <small class="text-muted">{{ item.sku }}</small>
+                      </td>
+                      <td class="text-center">{{ item.quantity }}</td>
+                      <td class="text-end pe-3">₹{{ item.total }}</td>
+                    </tr>
+                  }
+                </tbody>
+                <tfoot class="bg-light-subtle border-top">
+                  <tr>
+                    <td colspan="2" class="text-end fw-bold ps-3">Amount Paid</td>
+                    <td class="text-end pe-3 fw-bold text-primary">₹{{ p.amount }}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <div class="mt-4 p-3 border rounded-3 bg-light">
+              <h6 class="small fw-bold text-uppercase text-muted mb-2">Payment Gateway Details</h6>
+              <div class="row g-2">
+                <div class="col-6">
+                  <span class="d-block small text-muted">Payment Method</span>
+                  <span class="small fw-medium">{{ p.paymentTypeId.name }}</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span class="d-block small text-muted">Razorpay ID</span>
+                  <code class="small text-dark">{{ p.gatewayResponse.razorpay_payment_id }}</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5">
+            <div class="card border-0  h-100">
+                <h6 class="fw-bold mb-3"><i class="bi bi-geo-alt me-2"></i>Billing Address</h6>
+              <div class="card-body bg-light">
+                <div class="mb-3">
+                  <p class="fw-bold mb-0 text-dark">{{ p.orderId.billingAddress.name }}</p>
+                  <p class="text-muted small mb-0"><i class="bi bi-telephone me-1"></i> {{ p.orderId.billingAddress.mobile }}</p>
+                </div>
+                <div class="small text-secondary lh-base">
+                  {{ p.orderId.billingAddress.address }}<br>
+                  {{ p.orderId.billingAddress.city }}, {{ p.orderId.billingAddress.state }}<br>
+                  <strong>{{ p.orderId.billingAddress.pincode }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="p-5 text-center">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted">Loading payment details...</p>
+      </div>
+    }
+  </div>
+
+  <div class="modal-footer bg-light border-top-0">
+    <button type="button" class="btn btn-primary px-4">
+      <i class="bi bi-printer me-2"></i>Print Receipt
+    </button>
+  </div>
+</app-modal>

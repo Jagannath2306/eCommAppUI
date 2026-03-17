@@ -60,12 +60,37 @@ private alert = inject(AlertService);
   };
 
   // Helper for dynamic status colors
-  getStatusClass(status: string): string {
-    switch (status?.toUpperCase()) {
-      case 'CONFIRMED': return 'bg-success text-white';
-      case 'PENDING': return 'bg-warning text-dark';
-      case 'CANCELLED': return 'bg-danger text-white';
-      default: return 'bg-secondary text-white';
-    }
+ getStatusClass(status: string): string {
+  switch (status?.toUpperCase()) {
+    case 'CONFIRMED':
+      return 'bg-success text-white';
+
+    case 'PENDING':
+      return 'bg-warning text-dark';
+
+    case 'CANCELLED':
+      return 'bg-danger text-white';
+
+    case 'PACKED':
+      return 'bg-info text-white';
+
+    case 'SHIPPED':
+      return 'bg-primary text-white';
+
+    case 'OUT_FOR_DELIVERY':
+      return 'bg-warning text-dark';
+
+    case 'DELIVERED':
+      return 'bg-success text-white';
+
+    case 'RETURNED':
+      return 'bg-secondary text-white';
+
+    case 'REFUNDED':
+      return 'bg-dark text-white';
+
+    default:
+      return 'bg-light text-dark';
   }
+}
 }

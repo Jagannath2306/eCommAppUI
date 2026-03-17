@@ -14,6 +14,7 @@ import { VariantStatus } from '../variant-status/variant-status';
 import { Orders } from '../orders/orders';
 import { ViewOrder } from '../orders/view-order/view-order';
 import { TrackOrder } from '../orders/track-order/track-order';
+import { Payments } from '../payments/payments';
 
 export const DASHBOARD_ROUTES: Routes = [
   {
@@ -72,15 +73,9 @@ export const DASHBOARD_ROUTES: Routes = [
   {
     path: 'orders',
     component: Orders,
-    children: [
-    {
-      path: 'orders-track',
-      component: TrackOrder
-    }
-  ]
   },
   {
-    path: 'orders-status',
-    component: ViewOrder,
+    path: 'payments',
+    component: Payments,
   },
 ];
